@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <title>{% block title %} – YB Theta Tau{% endblock title%}</title>
+    <!-- Be responsive to screen size -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Incude Twitter Bootstrap -->
+    <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="static/css/bootstrap-responsive.css" rel=stylesheet>
+    {% endblock head %}
+  </head>
+  <body>
+    {% block body %}
+    {% block content %}
+    <h1>A Heading</h1>
+    <p>Body content goes here.</p>
+    {% endblock content %}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+    {% endblock body %}
+  </body>
+</html>
