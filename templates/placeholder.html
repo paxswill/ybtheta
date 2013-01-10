@@ -1,6 +1,6 @@
 {% set name = name|default('placeholder') %}
 {% extends "base.html" %}
 {% block title %}{{ name|title }}{{ super() }}{% endblock title %}
-{% block content %}
+{% block content -%}
 <p>This is {{ "the "+name if name else "a placeholder" }} page.</p>
-{% endblock content %}
+{%- endblock content %}
