@@ -1,3 +1,4 @@
+{% set top_name = name|default('placeholder') -%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,7 +19,7 @@
         <nav>
           <ul class="nav nav-pills">
           {%- for nav in [ "home", "about", "rush", "brothers", "activities", "contact" ] %}
-            <li{{ ' class="active"'|safe if nav == name}}><a href="/
+            <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
               {{- nav if nav != "home"}}">
               {{- nav|title }}</a></li>
           {%- endfor %}
