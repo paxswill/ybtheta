@@ -1,4 +1,4 @@
-{% set name = name|default('placeholder') %}
+{% set name = name|default('placeholder') -%}
 {% extends "base.html" %}
 {% block title %}{{ name|title }}{{ super() }}{% endblock title %}
 {% block content -%}

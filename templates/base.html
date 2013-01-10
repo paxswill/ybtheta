@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% block head %}
+    {% block head -%}
     <title>{% block title %} – YB Theta Tau{% endblock title%}</title>
     <!-- Be responsive to screen size -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Incude Twitter Bootstrap -->
     <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="static/css/bootstrap-responsive.css" rel=stylesheet>
-    {% endblock head %}
+    {%- endblock head %}
   </head>
   <body>
-    {% block body %}
+    {% block body -%}
     <div class="container">
-        <header class="page-header">
-          <h1>Theta Tau <small class="pull-right">Upsilon Beta Chapter at Old Dominion University</small></h1>
-          <nav>
-            <ul class="nav nav-pills">
-            {%- for nav in [ "home", "about", "rush", "brothers", "activities", "contact" ] %}
-              <li{{ ' class="active"'|safe if nav == name}}><a href="
-                {{- nav if nav != "home" else "/" }}">
-                {{- nav|title }}</a></li>
-            {%- endfor %}
-            </ul>
-          </nav>
-        </header>
-      {% block content %}
+      <header class="page-header">
+        <h1>Theta Tau <small>Upsilon Beta Chapter at Old Dominion University</small></h1>
+        <nav>
+          <ul class="nav nav-pills">
+          {%- for nav in [ "home", "about", "rush", "brothers", "activities", "contact" ] %}
+            <li{{ ' class="active"'|safe if nav == name}}><a href="/
+              {{- nav if nav != "home"}}">
+              {{- nav|title }}</a></li>
+          {%- endfor %}
+          </ul>
+        </nav>
+      </header>
+      {% block content -%}
       <h1>A Heading</h1>
       <p>Body content goes here.</p>
-      {% endblock content %}
+      {%- endblock content %}
       <footer>
-      <p>Placeholder Footer</p>
+        <p>Placeholder Footer</p>
       </footer>
     </div>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="static/js/bootstrap.js"></script>
-    {% endblock body %}
+    {%- endblock body %}
   </body>
 </html>
