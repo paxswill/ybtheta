@@ -1,9 +1,12 @@
 {% set top_name = name|default('placeholder') -%}
+{% macro nice_title(page_title, show_site=True) -%}
+{{ page_title|title }}{{ " – YB Theta Tau" if show_site }}
+{%- endmacro -%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     {% block head -%}
-    <title>{% block title %} – YB Theta Tau{% endblock title%}</title>
+    <title>{% block title %}{{ nice_title(name) }}{% endblock title%}</title>
     <!-- Be responsive to screen size -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Incude Twitter Bootstrap -->

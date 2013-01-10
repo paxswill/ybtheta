@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% block title %}{{ top_name|title }}{{ super() }}{% endblock title %}
 {% block content -%}
 <p>This is {{ "the "+top_name if top_name else "a placeholder" }} page.</p>
 {%- endblock content %}
