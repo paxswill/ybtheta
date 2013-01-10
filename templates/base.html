@@ -17,12 +17,11 @@
           <h1>Theta Tau <small class="pull-right">Upsilon Beta Chapter at Old Dominion University</small></h1>
           <nav>
             <ul class="nav nav-pills">
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/rush">Rush</a></li>
-              <li><a href="/brothers">Brothers</a></li>
-              <li><a href="/activities">Activities</a></li>
-              <li><a href="/contact">Contact</a></li>
+            {%- for nav in [ "home", "about", "rush", "brothers", "activities", "contact" ] %}
+              <li{{ ' class="active"'|safe if nav == page}}><a href="
+                {{- nav if nav != "home" else "/" }}">
+                {{- nav|title }}</a></li>
+            {%- endfor %}
             </ul>
           </nav>
         </header>
