@@ -1,4 +1,7 @@
-from flask import Flask, render_template, g, session, redirect, flash, request
+import os
+
+from flask import (Flask, render_template, g, session, redirect, flash, request,
+send_from_directory)
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext import openid
 
@@ -35,6 +38,12 @@ def activities():
 @app.route('/contact')
 def contact():
     return render_template('placeholder.html', name='contact')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root.path, 'static', 'img'),
+            'favicon.png', mimetype='image/png')
 
 
 # Misc functions
