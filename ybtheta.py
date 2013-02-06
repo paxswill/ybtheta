@@ -1,5 +1,6 @@
 import os
 import codecs
+import sys
 
 from markdown import markdown
 from flask import Flask, render_template
@@ -43,5 +44,6 @@ def markdown_file(path, relative=True):
 
 
 if __name__ == '__main__':
-    app.debug = True
+    if '--debug' in sys.argv[1:] or '-d' in sys.argv[1:]:
+        app.debug = True
     app.run()
