@@ -33,7 +33,7 @@ def login():
 def process_login(resp):
     session['openid'] = resp.identity_url
     openid = OpenID.query.filter_by(openid=resp.identity_url).first()
-    flash(u'Success!')
+    flash(u'Success!', 'success')
     if openid is not None:
         flash(u'Logged in')
         g.user = openid.user

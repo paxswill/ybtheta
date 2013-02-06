@@ -40,16 +40,18 @@
           </div>
         </div>
       </header>
-      {% with messages = get_flashed_messages() -%}
+      {% for category in ['error', 'warn', 'success', 'info'] -%}
+      {% with messages = get_flashed_messages(category_filter=[category]) -%}
         {% if messages -%}
         {% for message in messages -%}
-        <div class="alert">
+        <div class="alert alert-{{ category }}">
           <a href="#" class="close" data-dismiss="alert">&times;</a>
           {{ message }}
         </div>
         {%- endfor %}
         {%- endif %}
       {%- endwith %}
+      {%- endfor %}
       {% block content -%}
       <h1>A Heading</h1>
       <p>Body content goes here.</p>
