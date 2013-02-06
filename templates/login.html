@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Sign in</h2>
+  <form method="POST" action="">
+    {%- if error -%}
+    <p class="error"><strong>Error: {{ error }}</strong></p>
+    {%- endif -%}
+    {{ form.csrf_token }}
+    {{ form.openid.label }} {{ form.openid(size=40) }}
+    <input type="submit" value="Login">
+    <input type=hidden name=next value="{{ next }}">
+  </form>
+{% endblock content %}
