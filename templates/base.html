@@ -1,6 +1,6 @@
 {% set top_name = name|default('placeholder') -%}
 {% macro nice_title(page_title, show_site=True) -%}
-{{ page_title|title }}{{ " – YB Theta Tau" if show_site }}
+{{ page_title|title }}{{ " &mdash; YB Theta Tau"|safe if show_site }}
 {%- endmacro -%}
 <!DOCTYPE html>
 <html lang="en">
