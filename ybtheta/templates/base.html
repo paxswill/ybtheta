@@ -18,32 +18,32 @@
   <body>
     {% block body -%}
     <div class="container">
-      <header class="page-header">
-        <h1>Theta Tau<br><small>Upsilon Beta Chapter at Old Dominion University</small></h1>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              <a class="brand" href="/">&Theta;&Tau; ODU</a>
-              <ul class="nav">
-              {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
-                <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
-                  {{- nav if nav != "home"}}">
-                  {{- nav|title }}</a></li>
-              {%- endfor %}
-              </ul>
-              <ul class="nav pull-right">
-                {% if g.user -%}
-                <li><a href="#">{{ g.user.screen_name }}</a></li>
-                <li><a href="logout">Log out</a></li>
-                {%- else -%}
-                <li{{ ' class="active"'|safe if 'login' == top_name}}>
-                  <a href="login">Login</a>
-                </li>
-                {%- endif %}
-              </ul>
-            </div>
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="/">&Theta;&Tau; ODU</a>
+            <ul class="nav">
+            {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
+              <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
+                {{- nav if nav != "home"}}">
+                {{- nav|title }}</a></li>
+            {%- endfor %}
+            </ul>
+            <ul class="nav pull-right">
+              {% if g.user -%}
+              <li><a href="#">{{ g.user.screen_name }}</a></li>
+              <li><a href="logout">Log out</a></li>
+              {%- else -%}
+              <li{{ ' class="active"'|safe if 'login' == top_name}}>
+                <a href="login">Login</a>
+              </li>
+              {%- endif %}
+            </ul>
           </div>
         </div>
+      </div>
+      <header class="page-header">
+        <h1>Theta Tau<br><small>Upsilon Beta Chapter at Old Dominion University</small></h1>
       </header>
       {% for category in ['error', 'warn', 'success', 'info'] -%}
       {% with messages = get_flashed_messages(category_filter=[category]) -%}
