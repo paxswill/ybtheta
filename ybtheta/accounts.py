@@ -1,4 +1,5 @@
-from flask import g, session, redirect, flash, request, render_template
+from flask import (g, session, redirect, flash, request, render_template,
+url_for)
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.wtf import Form, TextField, Required
 
@@ -38,7 +39,7 @@ def process_login(resp):
         flash(u'Logged in')
         g.user = openid.user
         return redirect(oid.get_next_url())
-    return home()
+    return redirect(url_for('home'))
 
 
 # Database models
