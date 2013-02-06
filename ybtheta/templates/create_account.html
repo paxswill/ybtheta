@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Create an account</h2>
+  <form method="POST" action="">
+    {%- if error -%}
+    <p class="error"><strong>Error: {{ error }}</strong></p>
+    {%- endif -%}
+    {{ form.csrf_token }}
+    {{ form.real_name.label }} {{ form.real_name(size=40) }}
+    {{ form.screen_name.label }} {{ form.screen_name(size=40) }}
+    {{ form.email.label }} {{ form.email(size=40) }}
+    <input type="submit" value="Create account">
+    <input type=hidden name=next value="{{ next }}">
+  </form>
+{% endblock content %}
+

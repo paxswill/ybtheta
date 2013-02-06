@@ -34,22 +34,49 @@ def login():
 def process_login(resp):
     session['openid'] = resp.identity_url
     openid = OpenID.query.filter_by(openid=resp.identity_url).first()
-    flash(u'Success!', 'success')
     if openid is not None:
         flash(u'Logged in')
         g.user = openid.user
         return redirect(oid.get_next_url())
-    return redirect(url_for('home'))
+    return redirect(url_for('create_account', next=oid.get_next_url(),
+        real_name=resp.fullname, screen_name=resp.nickname, email=resp.email))
+
+
+@app.route('/create-account', methods=['GET', 'POST'])
+def create_account():
+    if g.user is not None or 'openid' not in session:
+        return redirect(url_for('home'))
+    if request.method == 'POST':
+        real_name = request.form['real_name']
+        screen_name = request.form['screen_name']
+        email = request.form['email']
+        if not real_name:
+            flash(u'You need to provide a name.', 'error')
+        elif not screen_name:
+            flash(u'You need to provide a screen name', 'error')
+        elif not email or '@' not in email:
+            flash(u'You need to provide a valid email address.', 'error')
+        else:
+            flash(u'Account created', 'success')
+            new_user = User(real_name, screen_name, email)
+            new_id = OpenID(session['openid'], new_user)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(oid.get_next_url())
+    return render_template('create_account.html', next_url=oid.get_next_url(),
+            form=CreateAccountForm())
 
 
 # Database models
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nickname = db.Column(db.String(80), unique=True)
+    real_name = db.Column(db.String(100))
+    screen_name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
 
-    def __init__(self, nickname, email):
-        self.nickname = nickname
+    def __init__(self, real_name, screen_name, email):
+        self.real_name = real_name
+        self.screen_name = screen_name
         self.email = email
 
     def __repr__(self):
@@ -65,8 +92,17 @@ class OpenID(db.Model):
     user = db.relationship('User', backref=db.backref('openids',
         lazy='dynamic'))
 
+    def __init__(self, openid, user):
+        self.openid = openid
+        self.user = user
+
 
 # WTForms
 class LoginForm(Form):
     openid = TextField('OpenID URL', validators=[Required()])
+
+class CreateAccountForm(Form):
+    real_name = TextField('Real Name', validators=[Required()])
+    screen_name = TextField('Screen Name', validators=[Required()])
+    email = TextField('Email', validators=[Required()])
 
