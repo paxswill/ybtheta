@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Incude Twitter Bootstrap -->
     <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="static/css/main.css" rel="stylesheet">
     <link href="static/css/bootstrap-responsive.css" rel=stylesheet>
     {%- endblock head %}
   </head>
@@ -19,15 +20,20 @@
     <div class="container">
       <header class="page-header">
         <h1>Theta Tau<br><small>Upsilon Beta Chapter at Old Dominion University</small></h1>
-        <nav>
-          <ul class="nav nav-pills">
-          {%- for nav in [ "home", "about", "rush", "brothers", "activities", "contact" ] %}
-            <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
-              {{- nav if nav != "home"}}">
-              {{- nav|title }}</a></li>
-          {%- endfor %}
-          </ul>
-        </nav>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="/">Theta Tau</a>
+              <ul class="nav">
+              {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
+                <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
+                  {{- nav if nav != "home"}}">
+                  {{- nav|title }}</a></li>
+              {%- endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
       </header>
       {% block content -%}
       <h1>A Heading</h1>
