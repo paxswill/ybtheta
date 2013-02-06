@@ -67,6 +67,13 @@ def create_account():
             form=CreateAccountForm())
 
 
+@app.route('/logout')
+def logout():
+    session.pop('openid', None)
+    flash(u'Logged out.', 'info')
+    return redirect(oid.get_next_url())
+
+
 # Database models
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
