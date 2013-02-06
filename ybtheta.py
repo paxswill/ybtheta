@@ -5,7 +5,8 @@ import sys
 from markdown import markdown
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('settings.cfg')
 
 @app.route('/')
 def home():
@@ -44,6 +45,4 @@ def markdown_file(path, relative=True):
 
 
 if __name__ == '__main__':
-    if '--debug' in sys.argv[1:] or '-d' in sys.argv[1:]:
-        app.debug = True
     app.run()
