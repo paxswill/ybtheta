@@ -17,32 +17,32 @@
     {%- endblock head %}
   </head>
   <body>
-    {% block body -%}
-    <div class="container">
-      <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-            <a class="brand" href="/">&Theta;&Tau; ODU</a>
-            <ul class="nav">
-            {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
-              <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
-                {{- nav if nav != "home"}}">
-                {{- nav|title }}</a></li>
-            {%- endfor %}
-            </ul>
-            <ul class="nav pull-right">
-              {% if g.user -%}
-              <li><a href="#">{{ g.user.screen_name }}</a></li>
-              <li><a href="logout">Log out</a></li>
-              {%- else -%}
-              <li{{ ' class="active"'|safe if 'login' == top_name}}>
-                <a href="login">Login</a>
-              </li>
-              {%- endif %}
-            </ul>
-          </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">&Theta;&Tau; ODU</a>
+          <ul class="nav">
+          {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
+            <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
+              {{- nav if nav != "home"}}">
+              {{- nav|title }}</a></li>
+          {%- endfor %}
+          </ul>
+          <ul class="nav pull-right">
+            {% if g.user -%}
+            <li><a href="#">{{ g.user.screen_name }}</a></li>
+            <li><a href="logout">Log out</a></li>
+            {%- else -%}
+            <li{{ ' class="active"'|safe if 'login' == top_name}}>
+              <a href="login">Login</a>
+            </li>
+            {%- endif %}
+          </ul>
         </div>
       </div>
+    </nav>
+    {% block body -%}
+    <div class="container">
       <header class="page-header">
         <h1>Theta Tau<br><small>Upsilon Beta Chapter at Old Dominion University</small></h1>
       </header>
