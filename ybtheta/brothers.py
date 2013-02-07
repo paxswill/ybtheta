@@ -1,11 +1,33 @@
 # coding=utf-8
 from flask import render_template
+from flask.views import View
 from ybtheta import app, db
 
 
-@app.route('/brothers')
-def brothers():
-    return render_template('placeholder.html', name='brothers')
+# Flask Views
+class ListView(View):
+
+    def get_template_name(self):
+        pass
+
+    def render_template(self, context):
+        return render_template(self.get_template_name(), **context)
+
+    def dispatch_request(self):
+        context = {'objects': self.get_objects()}
+        return self.render_template(context)
+
+
+class BrotherView(ListView):
+
+    def get_template_name(self):
+        return 'brothers_list.html'
+
+    def get_objects(self):
+        return Brother.query.all()
+
+
+app.add_url_rule('/brothers', view_func=BrotherView.as_view('all_brothers'))
 
 
 # SQLAlchemy models
