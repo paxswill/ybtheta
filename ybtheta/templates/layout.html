@@ -41,22 +41,19 @@
         </div>
       </div>
     </nav>
-    {% block body -%}
     <div class="container">
-      <header class="page-header">
-        <h1>Theta Tau<br><small>Upsilon Beta Chapter at Old Dominion University</small></h1>
-      </header>
+      {% block body -%}
       {%- for category in ['error', 'warn', 'success', 'info'] -%}
-      {% with messages = get_flashed_messages(category_filter=[category]) -%}
-        {% if messages -%}
-        {% for message in messages -%}
+        {% with messages = get_flashed_messages(category_filter=[category]) -%}
+          {% if messages -%}
+            {% for message in messages -%}
         <div class="alert alert-{{ category }}">
           <a href="#" class="close" data-dismiss="alert">&times;</a>
           {{ message }}
         </div>
-        {%- endfor %}
-        {%- endif %}
-      {%- endwith %}
+            {%- endfor %}
+          {%- endif %}
+        {%- endwith %}
       {%- endfor %}
       {% block content -%}
       <h1>A Heading</h1>
@@ -66,8 +63,10 @@
         <p>Placeholder Footer</p>
       </footer>
     </div>
+    {%- endblock body %}
+    {%- block scripts %}
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="static/js/bootstrap.js"></script>
-    {%- endblock body %}
+    {%- endblock scripts %}
   </body>
 </html>
