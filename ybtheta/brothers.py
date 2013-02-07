@@ -60,8 +60,9 @@ class Brother(db.Model):
     chapter = db.Column(db.String(100), nullable=False)
     initiation = db.Column(db.Date)
     pledge_class = db.Column(db.String(100))
-    big_brother = db.relationship('Brother', backref='little_brothers')
     big_id = db.Column(db.Integer, db.ForeignKey('brother.id'), nullable=True)
+    big_brother = db.relationship('Brother', backref='little_brothers',
+            remote_side='Brother.id')
     current_positions = db.relationship('Position',
             primaryjoin='(Brother.id == Position.brother_id) & '\
             '(Position.current == True)')
