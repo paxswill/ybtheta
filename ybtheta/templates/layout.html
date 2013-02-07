@@ -55,12 +55,11 @@ titles are set properly. -#}
     {#- The body block shouldn't be overridden wholesale. Instead, on of the
         sub-blocks should be individually overridden. -#}
     {% block body -%}
+    {% block header -%}
+    {% endblock header -%}
     {#- This big chunk is responsible for displaying any flashes that may
         have been dispatched, in order of importance, with proper
         color-coding. -#}
-    {% block header -%}
-    {% endblock header -%}
-    {# TODO: Insert breadcrumbs here #}
     {%- for category in ['error', 'warn', 'success', 'info'] -%}
       {% with messages = get_flashed_messages(category_filter=[category]) -%}
         {% if messages -%}
