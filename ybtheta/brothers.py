@@ -45,8 +45,6 @@ POSITIONS = {u'Corresponding Secretary': 'R',
 
 
 class Brother(db.Model):
-    __tablename__ = 'brothers'
-
     # Biographical info
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
@@ -60,8 +58,8 @@ class Brother(db.Model):
     chapter = db.Column(db.String(100), nullable=False)
     initiation = db.Column(db.Date)
     pledge_class = db.Column(db.String(100))
-    big_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     big_brother = db.relationship('Brother', backref='little_brothers')
+    big_id = db.Column(db.Integer, db.ForeignKey('brother.id'), nullable=True)
     current_positions = db.relationship('Position', backref='brother')
     past_positions = db.relationship('Position', backref='brother')
     status = db.Column(db.Enum('Alumni', 'Student', 'Co-op', 'Inactive',
@@ -79,19 +77,19 @@ class Position(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     position = db.Column(db.Enum(*POSITIONS.keys(), name='position'),
             nullable=False)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
 
 
 class EmailAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
     description = db.Column(db.String(60))
     email = db.Column(db.String(100), nullable=False)
 
 
 class PhoneNumber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
     description = db.Column(db.String(60))
     phone_number = db.Column(db.String(30), nullable=False)
 
@@ -178,7 +176,7 @@ STATES = {
 
 class MailingAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
     line_1 = db.Column(db.String(100))
     line_2 = db.Column(db.String(100))
     city = db.Column(db.String(80))
