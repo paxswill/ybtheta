@@ -1,12 +1,12 @@
+{# The following two lines is a stopgap measure until breadcrumbs and page
+titles are set properly. -#}
 {% set top_name = name|default('placeholder') -%}
-{% macro nice_title(page_title, show_site=True) -%}
-{{ page_title|title }}{{ " &mdash; YB Theta Tau"|safe if show_site }}
-{%- endmacro -%}
+{% set title = name|default('placeholder') -%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     {% block head -%}
-    <title>{% block title %}{{ nice_title(name) }}{% endblock title%}</title>
+    <title>{{ title|title }} &mdash; Theta Tau at ODU</title>
     <!-- Be responsive to screen size -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Incude Twitter Bootstrap -->
@@ -17,6 +17,7 @@
     {%- endblock head %}
   </head>
   <body>
+    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -41,8 +42,14 @@
         </div>
       </div>
     </nav>
+    <!-- Not navigation, i.e. the content, the stuff that people read -->
     <div class="container">
+      {#- The body block shouldn't be overridden wholesale. Instead, on of the
+          sub-blocks should be individually overridden. -#}
       {% block body -%}
+      {#- This big chunk is responsible for displaying any flashes that may
+          have been dispatched, in order of importance, with proper
+          color-coding. -#}
       {%- for category in ['error', 'warn', 'success', 'info'] -%}
         {% with messages = get_flashed_messages(category_filter=[category]) -%}
           {% if messages -%}
@@ -55,6 +62,7 @@
           {%- endif %}
         {%- endwith %}
       {%- endfor %}
+      {#- Override this section for the actual content -#}
       {% block content -%}
       <h1>A Heading</h1>
       <p>Body content goes here.</p>
@@ -65,6 +73,7 @@
     </div>
     {%- endblock body %}
     {%- block scripts %}
+    {#- Overrideable if a page needs a specific script -#}
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="static/js/bootstrap.js"></script>
     {%- endblock scripts %}
