@@ -1,10 +1,20 @@
 {% extends "layout.html" %}
 {% block header -%}
-<div class="hero-unit">
-  <h1>Theta Tau</h1>
-  <p>Upsilon Beta Chapter at Old Dominion University</p>
+<div class="container">
+  <div class="page-header">
+    <h1>Brothers</h1>
+  </div>
 </div>
 {%- endblock header %}
 {% block content -%}
-<p>This ain't {{ "the "+top_name if top_name else "a placeholder" }} page.</p>
+<ul class="thumbnails">
+{%- for brother in brothers -%}
+  <li class="span2">
+    <div class="thumbnail">
+      <a href="#"><img data-src="static/js/holder.js/150x150"></a>
+      <a href="#"><h5>{{ brother.name }}</h5></a>
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
 {%- endblock content %}
