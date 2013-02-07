@@ -21,24 +21,33 @@ titles are set properly. -#}
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <!-- Expand collapsed navbar -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <!-- Show the "brand" -->
           <a class="brand" href="/">&Theta;&Tau; ODU</a>
-          <ul class="nav">
-          {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
-            <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
-              {{- nav if nav != "home"}}">
-              {{- nav|title }}</a></li>
-          {%- endfor %}
-          </ul>
-          <ul class="nav pull-right">
-            {% if g.user -%}
-            <li><a href="account/{{ g.user.screen_name }}">{{ g.user.screen_name }}</a></li>
-            <li><a href="logout">Log out</a></li>
-            {%- else -%}
-            <li{{ ' class="active"'|safe if 'login' == top_name}}>
-              <a href="login">Login</a>
-            </li>
-            {%- endif %}
-          </ul>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+            {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
+              <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
+                {{- nav if nav != "home"}}">
+                {{- nav|title }}</a></li>
+            {%- endfor %}
+            </ul>
+            <ul class="nav pull-right">
+              {% if g.user -%}
+              <li><a href="account/{{ g.user.screen_name }}">{{ g.user.screen_name }}</a></li>
+              <li><a href="logout">Log out</a></li>
+              {%- else -%}
+              <li{{ ' class="active"'|safe if 'login' == top_name}}>
+                <a href="login">Login</a>
+              </li>
+              {%- endif %}
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
