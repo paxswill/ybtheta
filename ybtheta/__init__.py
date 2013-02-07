@@ -13,7 +13,7 @@ oid = openid.OpenID(app)
 # Database configuration
 db = SQLAlchemy(app)
 
-from ybtheta import accounts
+from ybtheta import accounts, brothers
 
 # Register Blueprints
 app.register_blueprint(markdown_page)
@@ -26,10 +26,6 @@ def home():
 @app.route('/rush')
 def rush():
     return render_template('placeholder.html', name='rush')
-
-@app.route('/brothers')
-def brothers():
-    return render_template('placeholder.html', name='brothers')
 
 @app.route('/activities')
 def activities():
