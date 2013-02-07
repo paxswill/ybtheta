@@ -1,4 +1,6 @@
 # coding=utf-8
+from datetime import date, timedelta
+
 from flask import render_template
 from flask.views import View
 from ybtheta import app, db
@@ -41,7 +43,7 @@ POSITIONS = {u'Corresponding Secretary': 'R',
              u'Treasurer': 'Z',
              u'Pledge Master': '',
              u'Pledge Instructor': ''
-             }
+         }
 
 
 class Brother(db.Model):
@@ -60,10 +62,15 @@ class Brother(db.Model):
     pledge_class = db.Column(db.String(100))
     big_brother = db.relationship('Brother', backref='little_brothers')
     big_id = db.Column(db.Integer, db.ForeignKey('brother.id'), nullable=True)
-    current_positions = db.relationship('Position', backref='brother')
-    past_positions = db.relationship('Position', backref='brother')
+    current_positions = db.relationship('Position',
+            primaryjoin='(Brother.id == Position.brother_id) & '\
+            '(Position.current == True)')
+    past_positions = db.relationship('Position',
+            primaryjoin='(Brother.id == Position.brother_id) & '\
+            '(Position.current == False)')
     status = db.Column(db.Enum('Alumni', 'Student', 'Co-op', 'Inactive',
-        'Pledge', name='brother_status'), nullable=False, default='Student')
+            'Pledge', name='brother_status'), nullable=False,
+            default='Student')
     # Academic info
     graduation_date = db.Column(db.Date)
     major = db.Column(db.String(80))
@@ -77,7 +84,10 @@ class Position(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     position = db.Column(db.Enum(*POSITIONS.keys(), name='position'),
             nullable=False)
+    date = db.Column(db.Date)
+    current = db.Column(db.Boolean, nullable=False, default=False)
     brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
+    brother = db.relationship('Brother', single_parent=True)
 
 
 class EmailAddress(db.Model):
