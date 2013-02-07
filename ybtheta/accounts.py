@@ -1,5 +1,5 @@
 from flask import (g, session, redirect, flash, request, render_template,
-url_for)
+url_for, abort)
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.wtf import Form, TextField, Required
 
@@ -65,6 +65,11 @@ def create_account():
             return redirect(oid.get_next_url())
     return render_template('create_account.html', next_url=oid.get_next_url(),
             form=CreateAccountForm())
+
+
+@app.route('/account/<screen_name>')
+def show_account(screen_name):
+    return abort(404)
 
 
 @app.route('/logout')

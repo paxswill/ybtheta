@@ -31,7 +31,7 @@ titles are set properly. -#}
           </ul>
           <ul class="nav pull-right">
             {% if g.user -%}
-            <li><a href="#">{{ g.user.screen_name }}</a></li>
+            <li><a href="account/{{ g.user.screen_name }}">{{ g.user.screen_name }}</a></li>
             <li><a href="logout">Log out</a></li>
             {%- else -%}
             <li{{ ' class="active"'|safe if 'login' == top_name}}>
