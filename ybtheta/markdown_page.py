@@ -11,7 +11,7 @@ markdown_page = Blueprint('markdown_page', __name__)
 def render_markdown(page):
     try:
         mdown_html = markdown_file('content/{}.mdown'.format(page))
-        return render_template('safe_content.html', name='page',
+        return render_template('safe_content.html', name=page,
                 content=mdown_html)
     except IOError:
         return abort(404)
