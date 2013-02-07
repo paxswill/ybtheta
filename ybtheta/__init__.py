@@ -21,7 +21,7 @@ app.register_blueprint(markdown_page)
 # Flask Routes
 @app.route('/')
 def home():
-    return render_template('placeholder.html', name='home')
+    return render_template('index.html', name='home')
 
 @app.route('/rush')
 def rush():

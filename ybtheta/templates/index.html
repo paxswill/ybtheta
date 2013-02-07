@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block header -%}
+<div class="hero-unit">
+  <h1>Theta Tau</h1>
+  <p>Upsilon Beta Chapter at Old Dominion University</p>
+</div>
+{%- endblock header %}
+{% block content -%}
+<p>This ain't {{ "the "+top_name if top_name else "a placeholder" }} page.</p>
+{%- endblock content %}
