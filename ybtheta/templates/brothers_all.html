@@ -1,0 +1,25 @@
+{% extends "brothers_thumbs.html" %}
+{% block content -%}
+{%- if brothers %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Roll Number</th>
+      <th>Pledge Class</th>
+      <th>Current Position</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%- for brother in brothers %}
+    <tr>
+      <td>{{ brother.name }}</td>
+      <td>{{ brother.chapter }} {{ brother.roll_number }}</td>
+      <td>{{ brother.pledge_class }}</td>
+      <td><!-- TODO: actually show these --></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif -%}
+{%- endblock content %}

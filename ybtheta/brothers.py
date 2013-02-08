@@ -17,8 +17,17 @@ def student_members():
     return render_template('brothers_thumbs.html', name='brothers', **ctx)
 
 
-@app.route('/brothers/alumni')
+@app.route('/brothers/all')
 def all_brothers():
+    print "Tracing..."
+    brothers = Brother.query.filter(Brother.status != 'Pledge').order_by(
+            Brother.page_number).all()
+    return render_template('brothers_all.html', brothers=brothers,
+            name='All Brothers')
+
+
+@app.route('/brothers/alumni')
+def alumni():
     alumni = Brother.query.filter(
             (Brother.status != 'Student') &
             (Brother.status != 'Pledge')).order_by(
