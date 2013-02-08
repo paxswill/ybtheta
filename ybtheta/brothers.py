@@ -16,7 +16,7 @@ class ListView(View):
         return render_template(self.get_template_name(), **context)
 
     def dispatch_request(self):
-        context = {'objects': self.get_objects()}
+        context = {'brothers': self.get_objects()}
         return self.render_template(context)
 
 
@@ -26,7 +26,7 @@ class BrotherView(ListView):
         return 'brothers_list.html'
 
     def get_objects(self):
-        return Brother.query.all()
+        return Brother.query.order_by(Brother.page_number).all()
 
 
 app.add_url_rule('/brothers', view_func=BrotherView.as_view('all_brothers'))
