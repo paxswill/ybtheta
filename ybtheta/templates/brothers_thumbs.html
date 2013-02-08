@@ -10,10 +10,12 @@
 <ul class="thumbnails">
 {%- for brother in brothers -%}
   <li class="span2">
+    <a href="/brothers/{{ brother.roll_number }}">
     <div class="thumbnail">
-      <a href="#"><img data-src="static/js/holder.js/150x150"></a>
-      <a href="#"><h5>{{ brother.name }}</h5></a>
+      <img data-src="static/js/holder.js/150x150">
+      <h5>{{ brother.name }}</h5>
     </div>
+    </a>
   </li>
 {%- endfor -%}
 </ul>
