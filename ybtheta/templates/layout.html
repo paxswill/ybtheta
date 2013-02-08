@@ -2,6 +2,11 @@
 titles are set properly. -#}
 {% set top_name = top_name|default(name|default('placeholder')) -%}
 {% set title = name|default('placeholder') -%}
+{%- macro elide_class(classes) %}
+{%- if classes and classes != "" -%}
+ class="{{ classes }}"
+{%- endif -%}
+{% endmacro -%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
