@@ -124,7 +124,7 @@ class Position(db.Model):
 
 
     def __repr__(self):
-        return "<{} - {}{}".format(self.position, self.date, "!" if
+        return "<{} - {}{}>".format(self.position, self.date, "!" if
                 self.current else "")
 
 
