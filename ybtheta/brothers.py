@@ -17,6 +17,16 @@ def student_members():
     return render_template('brothers_thumbs.html', name='brothers', **ctx)
 
 
+@app.route('/brothers/alumni')
+def all_brothers():
+    alumni = Brother.query.filter(
+            (Brother.status != 'Student') &
+            (Brother.status != 'Pledge')).order_by(
+                    Brother.page_number).all()
+    return render_template('brothers_thumbs.html', brothers=alumni,
+            name='Alumni')
+
+
 # SQLAlchemy models
 POSITIONS = {u'Corresponding Secretary': 'R',
              u'Inner Guard': 'T',
