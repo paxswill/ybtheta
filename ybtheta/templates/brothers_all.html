@@ -13,7 +13,9 @@
   <tbody>
   {%- for brother in brothers %}
     <tr>
-      <td>{{ brother.name }}</td>
+      <td>
+        <a href="/brothers/{{ brother.roll_number }}">{{ brother.name }}</a>
+      </td>
       <td>{{ brother.chapter }} {{ brother.roll_number }}</td>
       <td>{{ brother.pledge_class }}</td>
       <td>
