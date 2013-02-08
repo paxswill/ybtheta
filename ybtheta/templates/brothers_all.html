@@ -16,10 +16,14 @@
       <td>{{ brother.name }}</td>
       <td>{{ brother.chapter }} {{ brother.roll_number }}</td>
       <td>{{ brother.pledge_class }}</td>
-      <td><!-- TODO: actually show these --></td>
+      <td>
+        {%- if brother.current_positions %}
+        {{- brother.current_positions|join(', ', 'position') -}}
+        {% endif -%}
+      </td>
     </tr>
-  {% endfor %}
+  {%- endfor -%}
   </tbody>
 </table>
-{% endif -%}
+{%- endif -%}
 {%- endblock content %}
