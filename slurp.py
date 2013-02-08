@@ -72,11 +72,14 @@ for brother in crs.fetchall():
     address = bro.MailingAddress(address=brother[11])
     address.brother = new_bro
     if brother[5]:
-        new_bro.initiation=ts2dt(brother[5]).date()
+        new_bro.initiation = ts2dt(brother[5]).date()
+        new_bro.initiation += date.resolution
     if brother[7]:
-        new_bro.graduation_date=ts2dt(brother[7]).date()
+        new_bro.graduation_date = ts2dt(brother[7]).date()
+        new_bro.graduation_date += date.resolution
     if brother[14]:
-        new_bro.birthday=ts2dt(brother[14]).date()
+        new_bro.birthday = ts2dt(brother[14]).date()
+        new_bro.birthday += date.resolution
     # Save the new objects
     brother_lookup[brother[2]] = new_bro
     # Save the Big brother for once we have all brother imported
