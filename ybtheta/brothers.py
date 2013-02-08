@@ -2,34 +2,19 @@
 from datetime import date, datetime
 
 from flask import render_template
-from flask.views import View
 from ybtheta import app, db
 
 
 # Flask Views
-class ListView(View):
-
-    def get_template_name(self):
-        pass
-
-    def render_template(self, context):
-        return render_template(self.get_template_name(), **context)
-
-    def dispatch_request(self):
-        context = {'brothers': self.get_objects()}
-        return self.render_template(context)
-
-
-class BrotherView(ListView):
-
-    def get_template_name(self):
-        return 'brothers_list.html'
-
-    def get_objects(self):
-        return Brother.query.order_by(Brother.page_number).all()
-
-
-app.add_url_rule('/brothers', view_func=BrotherView.as_view('all_brothers'))
+@app.route('/brothers')
+def student_members():
+    ctx = {'brothers': Brother.query.filter_by(status='Student').\
+                order_by(Brother.page_number).all()}
+    pledges = Brother.query.filter_by(status='Pledge').order_by(Brother.name).\
+            all()
+    if len(pledges) > 0:
+        ctx['pledges'] = pledges
+    return render_template('brothers_thumbs.html', name='brothers', **ctx)
 
 
 # SQLAlchemy models
