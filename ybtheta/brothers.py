@@ -63,10 +63,10 @@ class Brother(db.Model):
     big_id = db.Column(db.Integer, db.ForeignKey('brother.id'), nullable=True)
     big_brother = db.relationship('Brother', backref='little_brothers',
             remote_side='Brother.id')
-    current_positions = db.relationship('Position',
+    current_positions = db.relationship('Position', back_populates='brother',
             primaryjoin='(Brother.id == Position.brother_id) & '\
             '(Position.current == True)')
-    past_positions = db.relationship('Position',
+    past_positions = db.relationship('Position', back_populates='brother',
             primaryjoin='(Brother.id == Position.brother_id) & '\
             '(Position.current == False)')
     status = db.Column(db.Enum('Alumni', 'Student', 'Co-Op', 'Inactive',
