@@ -85,6 +85,11 @@ class Brother(db.Model):
             default=datetime.utcnow())
 
 
+    def __repr__(self):
+        return "<{}, {} #{} ({})>".format(self.name, self.chapter,
+                self.roll_number, self.status)
+
+
 class Position(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     position = db.Column(db.Enum(*POSITIONS.keys(), name='position'),
@@ -95,11 +100,20 @@ class Position(db.Model):
     brother = db.relationship('Brother', single_parent=True)
 
 
+    def __repr__(self):
+        return "<{} - {}{}".format(self.position, self.date, "!" if
+                self.current else "")
+
+
 class EmailAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
     description = db.Column(db.String(60))
     email = db.Column(db.String(100), nullable=False)
+
+
+    def __repr__(self):
+        return "<{} ({})>".format(self.email, self.description)
 
 
 class PhoneNumber(db.Model):
@@ -109,9 +123,16 @@ class PhoneNumber(db.Model):
     phone_number = db.Column(db.String(30), nullable=False)
 
 
+    def __repr__(self):
+        return "<{} ({})>".format(self.phone_number, self.description)
+
+
 class MailingAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
     address = db.Column(db.Text)
     description = db.Column(db.String(60))
 
+
+    def __repr__(self):
+        return "<{} ({})>".format(self.address, self.description)
