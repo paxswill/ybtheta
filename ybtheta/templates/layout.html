@@ -1,7 +1,7 @@
 {# The following two lines is a stopgap measure until breadcrumbs and page
 titles are set properly. -#}
 {% set top_name = top_name|default(name|default('placeholder')) -%}
-{% set title = name|default('placeholder') -%}
+{% set title = title|default(name|default('placeholder')) -%}
 {%- macro elide_class(classes) %}
 {%- if classes and classes != "" -%}
  class="{{ classes }}"
