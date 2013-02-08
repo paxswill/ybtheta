@@ -36,12 +36,6 @@ def contact():
     return render_template('placeholder.html', name='contact')
 
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root.path, 'static', 'img'),
-            'favicon.png', mimetype='image/png')
-
-
 # Misc functions
 
 if __name__ == '__main__':
