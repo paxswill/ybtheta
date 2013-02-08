@@ -36,11 +36,29 @@ titles are set properly. -#}
           <a class="brand" href="/">&Theta;&Tau; ODU</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-            {%- for nav in ["about", "rush", "brothers", "activities", "contact" ] %}
-              <li{{ ' class="active"'|safe if nav == top_name}}><a href="/
-                {{- nav if nav != "home"}}">
-                {{- nav|title }}</a></li>
-            {%- endfor %}
+              <li {{ elide_class("active" if top_name == "about") }}>
+                <a href="/about">About</a>
+              </li>
+              <li {{ elide_class("active" if top_name == "rush") }}>
+                <a href="/rush">Rush</a>
+              </li>
+              <li {{ elide_class("dropdown active" if top_name == "brothers" else "dropdown") }}>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Brothers
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/brothers">Students</a></li>
+                  <li><a href="/brothers/alumni">Alumni</a></li>
+                  <li><a href="/brothers/all">All Brothers</a></li>
+                </ul>
+              </li>
+              <li {{ elide_class("active" if top_name == "activities") }}>
+                <a href="/activities">Activities</a>
+              </li>
+              <li {{ elide_class("active" if top_name == "contact") }}>
+                <a href="/contact">Contact</a>
+              </li>
             </ul>
             <ul class="nav pull-right">
               {% if g.user -%}

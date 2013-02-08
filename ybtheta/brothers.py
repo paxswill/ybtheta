@@ -14,7 +14,8 @@ def student_members():
             all()
     if len(pledges) > 0:
         ctx['pledges'] = pledges
-    return render_template('brothers_thumbs.html', name='brothers', **ctx)
+    return render_template('brothers_thumbs.html', name='Students',
+            top_name='brothers', **ctx)
 
 
 @app.route('/brothers/all')
@@ -23,7 +24,7 @@ def all_brothers():
     brothers = Brother.query.filter(Brother.status != 'Pledge').order_by(
             Brother.page_number).all()
     return render_template('brothers_all.html', brothers=brothers,
-            name='All Brothers')
+            name='All Brothers', top_name='brothers')
 
 
 @app.route('/brothers/alumni')
@@ -33,7 +34,7 @@ def alumni():
             (Brother.status != 'Pledge')).order_by(
                     Brother.page_number).all()
     return render_template('brothers_thumbs.html', brothers=alumni,
-            name='Alumni')
+            name='Alumni', top_name='brothers')
 
 
 # SQLAlchemy models
