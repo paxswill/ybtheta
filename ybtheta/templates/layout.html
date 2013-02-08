@@ -1,6 +1,6 @@
 {# The following two lines is a stopgap measure until breadcrumbs and page
 titles are set properly. -#}
-{% set top_name = name|default('placeholder') -%}
+{% set top_name = top_name|default(name|default('placeholder')) -%}
 {% set title = name|default('placeholder') -%}
 <!DOCTYPE html>
 <html lang="en">
