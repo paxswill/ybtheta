@@ -1,0 +1,47 @@
+{% set top_name = 'brothers' %}
+{% set title = brother.name %}
+{% extends "layout.html" %}
+{% block header -%}
+<div class="container">
+  <div class="page-header">
+    <h1>{{ brother.name }}</h1>
+  </div>
+</div>
+{%- endblock header %}
+{% macro display_info(property, label=None) -%}
+    <dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
+    <dd>{{ brother|attr(property) }}</dd>
+{%- endmacro %}
+{% macro elide_info(property, label=None) -%}
+{{ display_info(property, label)|safe if brother|attr(property) }}
+{%- endmacro %}
+{% block content -%}
+<div class="container">
+  <dl class="dl-horizontal">
+    <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
+    {{ elide_info('nickname')|safe }}
+    {{ elide_info('birthday')|safe }}
+    {{ elide_info('chapter')|safe }}
+    {%- if brother.status != 'Pledge' -%}
+    {{ elide_info('roll_number')|safe }}
+    {{ elide_info('page_number')|safe }}
+    {{ elide_info('initiation', 'Initiation Date')|safe }}
+    {%- endif -%}
+    {{ elide_info('pledge_class')|safe }}
+    {%- if brother.big_brother -%}
+    <dt>Big Brother</dt>
+    <a href="/brothers/{{ brother.big_brother.roll_number }}"><dd>{{ brother.big_brother.name }}</dd></a>
+    {%- endif -%}
+    <dt>Little Brothers</dt><dd>Foo</dd>
+    <dt>Status</dt><dd>{{ brother.status }}</dd>
+    {%- if brother.current_positions -%}
+    <dt>Current Position</dt><dd>Bar</dd>
+    {%- endif -%}
+    {%- if brother.past_positions -%}
+    <dt>Past Positions</dt><dd>Baz</dd>
+    {%- endif -%}
+    {{ elide_info('major')|safe }}
+    {{ elide_info('graduation_date')|safe }}
+  </dl>
+</div>
+{%- endblock content %}
