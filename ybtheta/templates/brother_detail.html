@@ -15,6 +15,9 @@
 {% macro elide_info(property, label=None) -%}
 {{ display_info(property, label)|safe if brother|attr(property) }}
 {%- endmacro %}
+{% macro link_brother(brother) -%}
+<a href="/brothers/{{ brother.roll_number }}">{{ brother.name }}</a>
+{%- endmacro %}
 {% block content -%}
 <div class="container">
   <dl class="dl-horizontal">
@@ -30,9 +33,15 @@
     {{ elide_info('pledge_class')|safe }}
     {%- if brother.big_brother -%}
     <dt>Big Brother</dt>
-    <a href="/brothers/{{ brother.big_brother.roll_number }}"><dd>{{ brother.big_brother.name }}</dd></a>
-    {%- endif -%}
-    <dt>Little Brothers</dt><dd>Foo</dd>
+    <dd>{{ link_brother(brother.big_brother) }}</dd>
+    {% endif -%}
+    {%- if brother.little_brothers %}
+    <dt>Little Brothers</dt>
+    <dd>
+    {%- for little in brother.little_brothers -%}
+    {{ link_brother(little) }}{{ ', ' if not loop.last }}
+    {%- endfor -%}
+    {%- endif %}
     <dt>Status</dt><dd>{{ brother.status }}</dd>
     {%- if brother.current_positions -%}
     <dt>Current Position</dt>
