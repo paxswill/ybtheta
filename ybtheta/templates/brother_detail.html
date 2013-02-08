@@ -18,17 +18,23 @@
 {% macro link_brother(brother) -%}
 <a href="/brothers/{{ brother.roll_number }}">{{ brother.name }}</a>
 {%- endmacro %}
+{% macro display_date(property, label=None) -%}
+{% if brother|attr(property) -%}
+    <dt>{{ label|default(property|replace('_', ' ')|title) }}</dt>
+    <dd>{{ (brother|attr(property)).strftime("%B %d, %Y") }}</dd>
+{%- endif %}
+{%- endmacro %}
 {% block content -%}
 <div class="container">
   <dl class="dl-horizontal">
     <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
     {{ elide_info('nickname')|safe }}
-    {{ elide_info('birthday')|safe }}
+    {{ display_date('birthday')|safe }}
     {{ elide_info('chapter')|safe }}
     {%- if brother.status != 'Pledge' -%}
     {{ elide_info('roll_number')|safe }}
     {{ elide_info('page_number')|safe }}
-    {{ elide_info('initiation', 'Initiation Date')|safe }}
+    {{ display_date('initiation', 'Initiation Date')|safe }}
     {%- endif -%}
     {{ elide_info('pledge_class')|safe }}
     {%- if brother.big_brother -%}
@@ -52,7 +58,7 @@
     <dd>{{ brother.past_positions|join(', ', 'position') }}</dd>
     {%- endif -%}
     {{ elide_info('major')|safe }}
-    {{ elide_info('graduation_date')|safe }}
+    {{ display_date('graduation_date')|safe }}
   </dl>
 </div>
 {%- endblock content %}
