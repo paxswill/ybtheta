@@ -47,27 +47,70 @@
 </ul>
 {%- endmacro %}
 
-{% macro render_form(form, class=None) -%}
-<form method="POST" class="form-horizontal{{ " "+class if class }}"
-  action="/brothers/id/{{ form.id.data }}/edit">
-  {% for field in form if field.widget.input_type != "hidden" %}
-  <div class="control-group{{ " error" if field.errors }}">
-    {{ field.label(class="control-label") }}
-    <div class="controls">
+{% macro render_field(field) %}
+<div class="control-group{{ " error" if field.errors }}">
+  {% if field.type == "FieldList" %}
+  <!-- FieldList -->
+  {{ field.label(class="control-label") }}
+  <div class="controls">
+    {% for sub_field in field %}
+    {{ render_field(sub_field) }}
+    {% endfor %}
+  </div>
+  {% elif field.type == "FormField" %}
+  <!-- FormField -->
+    {% for sub_field in field %}
+    {% if sub_field.widget.input_type == "hidden" %}
+      {{ sub_field -}}
+    {% else %}
+      {{ render_field(sub_field) }}
+    {% endif %}
+    {% endfor %}
+  {% elif field.widget.input_type == "checkbox" %}
+  <!-- Checkbox widgets -->
+    <label class="checkbox">
       {{ field }}
-      {% for error in field.errors %}
-      <span class="help-inline">{{ error }}</span>
+      {{ field.label.text }}
+    </label>
+  {% else %}
+  <!-- Misc widget -->
+  {{ field.label(class="control-label") }}
+  <div class="controls">
+    {% if field.widget.input_type == "radio" %}
+      <!-- Radio Widgets -->
+      {% for option in field %}
+      <label class="radio">
+        {{ option }}
+        {{ option.label.text }}
+      </label>
       {% endfor %}
-    </div>
+    {% else %}
+      {{ field }}
+    {% endif %}
+    {% for error in field.errors %}
+    <span class="help-inline">{{ error }}</span>
+    {% endfor %}
   </div>
-  {%- endfor -%}
-  <div class="control-group">
-    <div class="controls">
-      {%- for field in form if field.widget.input_type == "hidden" %}
-      {{ field -}}
-      {% endfor %}
-      <input class="btn" type=submit value="Submit">
-    </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro render_field_list(field_list) %}
+{% for field in field_list %}
+{{ render_field(field) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_form(form, class=None) -%}
+{% for field in form if field.widget.input_type != "hidden" %}
+{{ render_field(field) }}
+{%- endfor -%}
+<div class="control-group">
+  <div class="controls">
+    {%- for field in form if field.widget.input_type == "hidden" %}
+    {{ field -}}
+    {% endfor %}
+    <input class="btn" type=submit value="Submit">
   </div>
-</form>
+</div>
 {%- endmacro %}

@@ -47,7 +47,9 @@
     {% endif %}
     {% if form -%}
     {% set class = "edit-toggle" if not start_edit else None %}
+    <form method="POST" class="form-horizontal{{ " "+class if class }}" action="/brothers/id/{{ form.id.data }}/edit">
     {{ util.render_form(form, class=class) }}
+    </form>
     {%- endif %}
   </div>
   <div class="span4">
