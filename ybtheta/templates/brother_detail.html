@@ -10,33 +10,47 @@
 </div>
 {%- endblock header %}
 {% block content -%}
-<dl class="dl-horizontal">
-  <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
-  {{ util.display_text(brother, 'nickname') }}
-  {{ util.display_date(brother, 'birthday') }}
-  {{ util.display_text(brother, 'chapter') }}
-  {%- if brother.status != 'Pledge' -%}
-  {{ util.display_text(brother, 'roll_number') }}
-  {{ util.display_text(brother, 'page_number') }}
-  {{ util.display_date(brother, 'initiation', 'Initiation Date') }}
-  {%- endif -%}
-  {{ util.display_text(brother, 'pledge_class') }}
-  {%- if brother.big_brother -%}
-  <dt>Big Brother</dt>
-  <dd>{{ util.brother_name(brother.big_brother) }}</dd>
-  {% endif -%}
-  {%- if brother.little_brothers %}
-  <dt>Little Brothers</dt>
-  <dd>
-  {%- for little in brother.little_brothers -%}
-  {{ util.brother_name(little) }}{{ ', ' if not loop.last }}
-  {%- endfor -%}
-  </dd>
-  {%- endif %}
-  {{ util.display_text(brother, 'status') }}
-  {{- util.display_positions(brother, 'current_positions') }}
-  {{- util.display_positions(brother, 'past_positions') }}
-  {{ util.display_text(brother, 'major') }}
-  {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
-</dl>
+<div class="row">
+  <div class="span11">
+    <dl class="dl-horizontal">
+      <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
+      {{ util.display_text(brother, 'nickname') }}
+      {{ util.display_date(brother, 'birthday') }}
+      {{ util.display_text(brother, 'chapter') }}
+      {%- if brother.status != 'Pledge' -%}
+      {{ util.display_text(brother, 'roll_number') }}
+      {{ util.display_text(brother, 'page_number') }}
+      {{ util.display_date(brother, 'initiation', 'Initiation Date') }}
+      {%- endif -%}
+      {{ util.display_text(brother, 'pledge_class') }}
+      {%- if brother.big_brother -%}
+      <dt>Big Brother</dt>
+      <dd>{{ util.brother_name(brother.big_brother) }}</dd>
+      {% endif -%}
+      {%- if brother.little_brothers %}
+      <dt>Little Brothers</dt>
+      <dd>
+      {%- for little in brother.little_brothers -%}
+      {{ util.brother_name(little) }}{{ ', ' if not loop.last }}
+      {%- endfor -%}
+      </dd>
+      {%- endif %}
+      {{ util.display_text(brother, 'status') }}
+      {{- util.display_positions(brother, 'current_positions') }}
+      {{- util.display_positions(brother, 'past_positions') }}
+      {{ util.display_text(brother, 'major') }}
+      {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
+    </dl>
+    {% if form -%}
+    {{ util.render_form(form) }}
+    {%- endif %}
+  </div>
+  <div class="span1">
+    <a href="#" id="edit">Edit</a>
+  </div>
+</div>
 {%- endblock content %}
+{% block scripts -%}
+{{ super() }}
+<script src="/static/js/main.js"></script>
+{%- endblock scripts %}
