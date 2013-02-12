@@ -88,6 +88,9 @@ class ContactInfoMixin(object):
     def brother_id(cls):
         return db.Column(db.Integer, db.ForeignKey('brothers.id'))
 
+    def info(self):
+        pass
+
 
 class EmailAddress(ContactInfoMixin, db.Model):
     __tablename__ = 'emails'
@@ -95,6 +98,9 @@ class EmailAddress(ContactInfoMixin, db.Model):
 
     def __repr__(self):
         return "<{} ({})>".format(self.email, self.description)
+
+    def info(self):
+        return self.email
 
 
 class PhoneNumber(ContactInfoMixin, db.Model):
@@ -104,6 +110,9 @@ class PhoneNumber(ContactInfoMixin, db.Model):
     def __repr__(self):
         return "<{} ({})>".format(self.phone_number, self.description)
 
+    def info(self):
+        return self.phone_number
+
 
 class MailingAddress(ContactInfoMixin, db.Model):
     __tablename__ = 'addresses'
@@ -111,6 +120,9 @@ class MailingAddress(ContactInfoMixin, db.Model):
 
     def __repr__(self):
         return "<{} ({})>".format(self.address, self.description)
+
+    def info(self):
+        return self.address
 
 
 class User(db.Model):
