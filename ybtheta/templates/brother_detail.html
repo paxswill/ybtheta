@@ -1,6 +1,7 @@
 {% import 'brother_utils.html' as util %}
 {% set top_name = 'brothers' %}
 {% set title = brother.name %}
+{% set start_edit = start_edit|default(False) %}
 {% extends "layout.html" %}
 {% block header -%}
 <div class="container">
@@ -12,6 +13,7 @@
 {% block content -%}
 <div class="row">
   <div class="span8">
+    {% if not start_edit %}
     <dl class="dl-horizontal edit-toggle">
       <dt>Full Name</dt>
       <dd>{{ brother.full_name if brother.full_name else brother.name }}</dd>
@@ -42,13 +44,15 @@
       {{ util.display_text(brother, 'major') }}
       {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
     </dl>
+    {% endif %}
     {% if form -%}
-    {{ util.render_form(form, class="edit-toggle") }}
+    {% set class = "edit-toggle" if not start_edit else None %}
+    {{ util.render_form(form, class=class) }}
     {%- endif %}
   </div>
   <div class="span4">
     <div class="btn-group pull-right">
-      <a class="btn" href="#" id="edit">Edit</a>
+      <a class="btn" href="/brothers/id/{{ brother.id }}/edit" id="edit">Edit</a>
       <a class="btn" href="#" id="cancel">Cancel</a>
     </div>
   </div>
@@ -56,5 +60,5 @@
 {%- endblock content %}
 {% block scripts -%}
 {{ super() }}
-<script src="/static/js/main.js"></script>
+{{ '<script src="/static/js/main.js"></script>'|safe if not start_edit }}
 {%- endblock scripts %}
