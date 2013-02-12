@@ -1,6 +1,7 @@
 from datetime import date, datetime
 
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declared_attr
 
 from ybtheta import db
 
@@ -79,41 +80,34 @@ class Position(db.Model):
         return "<{} - {}{}>".format(self.position, self.date, "!" if
                 self.current else "")
 
-
-class EmailAddress(db.Model):
-    __tablename__ = 'emails'
-
+class ContactInfoMixin(object):
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     description = db.Column(db.String(60))
-    email = db.Column(db.String(100), nullable=False)
 
+    @declared_attr
+    def brother_id(cls):
+        return db.Column(db.Integer, db.ForeignKey('brothers.id'))
+
+
+class EmailAddress(ContactInfoMixin, db.Model):
+    __tablename__ = 'emails'
+    email = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return "<{} ({})>".format(self.email, self.description)
 
 
-class PhoneNumber(db.Model):
+class PhoneNumber(ContactInfoMixin, db.Model):
     __tablename__ = 'phonenumbers'
-
-    id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
-    description = db.Column(db.String(60))
     phone_number = db.Column(db.String(30), nullable=False)
-
 
     def __repr__(self):
         return "<{} ({})>".format(self.phone_number, self.description)
 
 
-class MailingAddress(db.Model):
+class MailingAddress(ContactInfoMixin, db.Model):
     __tablename__ = 'addresses'
-
-    id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     address = db.Column(db.Text)
-    description = db.Column(db.String(60))
-
 
     def __repr__(self):
         return "<{} ({})>".format(self.address, self.description)
