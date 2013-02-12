@@ -38,7 +38,7 @@
     {{- util.display_positions(brother, 'current_positions') }}
     {{- util.display_positions(brother, 'past_positions') }}
     {{ util.display_text(brother, 'major')|safe }}
-    {{ util.display_date(brother, 'graduation_date')|safe }}
+    {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
   </dl>
 </div>
 {%- endblock content %}
