@@ -70,6 +70,8 @@ POSITIONS = {u'Corresponding Secretary': 'R',
 
 
 class Brother(db.Model):
+    __tablename__ = 'brothers'
+
     # Biographical info
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
@@ -78,12 +80,12 @@ class Brother(db.Model):
     birthday = db.Column(db.Date)
     picture = db.Column(db.String(200))
     # Theta Tau info
-    roll_number = db.Column(db.Integer, nullable=False)
-    page_number = db.Column(db.Integer, nullable=False)
+    roll_number = db.Column(db.Integer)
+    page_number = db.Column(db.Integer)
     chapter = db.Column(db.String(100), nullable=False, default="Upsilon Beta")
     initiation = db.Column(db.Date)
     pledge_class = db.Column(db.String(100))
-    big_id = db.Column(db.Integer, db.ForeignKey('brother.id'), nullable=True)
+    big_id = db.Column(db.Integer, db.ForeignKey('brothers.id'), nullable=True)
     big_brother = db.relationship('Brother', backref='little_brothers',
             remote_side='Brother.id')
     current_positions = db.relationship('Position', back_populates='brother',
@@ -114,12 +116,14 @@ class Brother(db.Model):
 
 
 class Position(db.Model):
+    __tablename__ = 'positions'
+
     id = db.Column(db.Integer, primary_key=True)
     position = db.Column(db.Enum(*POSITIONS.keys(), name='position'),
             nullable=False)
     date = db.Column(db.Date)
     current = db.Column(db.Boolean, nullable=False, default=False)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     brother = db.relationship('Brother', single_parent=True)
 
 
@@ -129,8 +133,10 @@ class Position(db.Model):
 
 
 class EmailAddress(db.Model):
+    __tablename__ = 'emails'
+
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     description = db.Column(db.String(60))
     email = db.Column(db.String(100), nullable=False)
 
@@ -140,8 +146,10 @@ class EmailAddress(db.Model):
 
 
 class PhoneNumber(db.Model):
+    __tablename__ = 'phonenumbers'
+
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     description = db.Column(db.String(60))
     phone_number = db.Column(db.String(30), nullable=False)
 
@@ -151,8 +159,10 @@ class PhoneNumber(db.Model):
 
 
 class MailingAddress(db.Model):
+    __tablename__ = 'addresses'
+
     id = db.Column(db.Integer, primary_key=True)
-    brother_id = db.Column(db.Integer, db.ForeignKey('brother.id'))
+    brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
     address = db.Column(db.Text)
     description = db.Column(db.String(60))
 

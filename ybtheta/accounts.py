@@ -81,6 +81,8 @@ def logout():
 
 # Database models
 class User(db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     real_name = db.Column(db.String(100))
     screen_name = db.Column(db.String(80), unique=True)
@@ -100,7 +102,7 @@ class OpenID(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     openid = db.Column(db.String(250), nullable=False, index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref=db.backref('openids',
         lazy='dynamic'))
 
