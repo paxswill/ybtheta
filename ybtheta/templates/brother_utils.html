@@ -1,0 +1,48 @@
+
+{% macro brother_link(brother) -%}
+{% if brother.roll_number -%}
+<a href="/brothers/{{ brother.roll_number }}">
+{%- else -%}
+<a href="/brothers/id/{{ brother.id}}">
+{%- endif -%}
+{%- endmacro %}
+
+{% macro brother_name(brother) -%}
+{{ brother_link(brother) }}{{ brother.name }}</a>
+{%- endmacro %}
+
+{% macro display_date(brother, property, label=None) -%}
+{% if brother|attr(property) -%}
+    <dt>{{ label|default(property|replace('_', ' ')|title) }}</dt>
+    <dd>{{ (brother|attr(property)).strftime("%B %d, %Y") }}</dd>
+{%- endif %}
+{%- endmacro %}
+
+{% macro display_text(brother, property, label=None) -%}
+  {% if brother|attr(property) -%}
+    <dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
+    <dd>{{ brother|attr(property) }}</dd>
+  {%- endif %}
+{%- endmacro %}
+
+{% macro display_positions(brother, property, label=None, wack=False) -%}
+{% if brother|attr(property) -%}
+<dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
+<dd>{{ brother|attr(property)|join(', ', 'position') }}</dd>
+{%- endif %}
+{%- endmacro %}
+
+{% macro brother_thumbs(brothers) -%}
+<ul class="thumbnails">
+{%- for brother in brothers -%}
+  <li class="span2">
+    {{ brother_link(brother) }}
+    <div class="thumbnail">
+      <img data-src="static/js/holder.js/150x150">
+      <h5>{{ brother.name }}</h5>
+    </div>
+    </a>
+  </li>
+{%- endfor -%}
+</ul>
+{%- endmacro %}

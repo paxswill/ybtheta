@@ -1,3 +1,4 @@
+{% import 'brother_utils.html' as util %}
 {% extends "layout.html" %}
 {% block header -%}
 <div class="container">
@@ -6,24 +7,10 @@
   </div>
 </div>
 {%- endblock header %}
-{% macro brother_thumbs(brothers) -%}
-<ul class="thumbnails">
-{%- for brother in brothers -%}
-  <li class="span2">
-    <a href="/brothers/{{ brother.roll_number }}">
-    <div class="thumbnail">
-      <img data-src="static/js/holder.js/150x150">
-      <h5>{{ brother.name }}</h5>
-    </div>
-    </a>
-  </li>
-{%- endfor -%}
-</ul>
-{%- endmacro %}
 {% block content -%}
-{{ brother_thumbs(brothers) }}
+{{ util.brother_thumbs(brothers) }}
 {%- if pledges -%}
 <h2>Pledges</h2>
-{{ brother_thumbs(pledges) }}
+{{ util.brother_thumbs(pledges) }}
 {%- endif %}
 {%- endblock content %}

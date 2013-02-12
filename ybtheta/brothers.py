@@ -55,6 +55,16 @@ def brother_detail(roll_num, ordinal):
     return render_template('brother_detail.html', brother=brother)
 
 
+
+@app.route('/brothers/id/<int:id_num>')
+def brother_detail_id(id_num):
+    brother = Brother.query.get_or_404(id_num)
+    if brother.roll_number is not None:
+        return redirect(url_for('brother_detail',
+            roll_num=brother.roll_number))
+    return render_template('brother_detail.html', brother=brother)
+
+
 # SQLAlchemy models
 POSITIONS = {u'Corresponding Secretary': 'R',
              u'Inner Guard': 'T',

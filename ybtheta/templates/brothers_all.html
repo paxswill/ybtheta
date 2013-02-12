@@ -1,3 +1,4 @@
+{% import 'brother_utils.html' as util %}
 {% extends "brothers_thumbs.html" %}
 {% block content -%}
 {%- if brothers %}
@@ -13,9 +14,7 @@
   <tbody>
   {%- for brother in brothers %}
     <tr>
-      <td>
-        <a href="/brothers/{{ brother.roll_number }}">{{ brother.name }}</a>
-      </td>
+      <td>{{ util.brother_name(brother) }}</td>
       <td>{{ brother.chapter }} {{ brother.roll_number }}</td>
       <td>{{ brother.pledge_class }}</td>
       <td>

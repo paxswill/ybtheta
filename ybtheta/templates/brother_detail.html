@@ -1,3 +1,4 @@
+{% import 'brother_utils.html' as util %}
 {% set top_name = 'brothers' %}
 {% set title = brother.name %}
 {% extends "layout.html" %}
@@ -8,57 +9,36 @@
   </div>
 </div>
 {%- endblock header %}
-{% macro display_info(property, label=None) -%}
-    <dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
-    <dd>{{ brother|attr(property) }}</dd>
-{%- endmacro %}
-{% macro elide_info(property, label=None) -%}
-{{ display_info(property, label)|safe if brother|attr(property) }}
-{%- endmacro %}
-{% macro link_brother(brother) -%}
-<a href="/brothers/{{ brother.roll_number }}">{{ brother.name }}</a>
-{%- endmacro %}
-{% macro display_date(property, label=None) -%}
-{% if brother|attr(property) -%}
-    <dt>{{ label|default(property|replace('_', ' ')|title) }}</dt>
-    <dd>{{ (brother|attr(property)).strftime("%B %d, %Y") }}</dd>
-{%- endif %}
-{%- endmacro %}
 {% block content -%}
 <div class="container">
   <dl class="dl-horizontal">
     <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
-    {{ elide_info('nickname')|safe }}
-    {{ display_date('birthday')|safe }}
-    {{ elide_info('chapter')|safe }}
+    {{ util.display_text(brother, 'nickname')|safe }}
+    {{ util.display_date(brother, 'birthday')|safe }}
+    {{ util.display_text(brother, 'chapter')|safe }}
     {%- if brother.status != 'Pledge' -%}
-    {{ elide_info('roll_number')|safe }}
-    {{ elide_info('page_number')|safe }}
-    {{ display_date('initiation', 'Initiation Date')|safe }}
+    {{ util.display_text(brother, 'roll_number')|safe }}
+    {{ util.display_text(brother, 'page_number')|safe }}
+    {{ util.display_date(brother, 'initiation', 'Initiation Date')|safe }}
     {%- endif -%}
-    {{ elide_info('pledge_class')|safe }}
+    {{ util.display_text(brother, 'pledge_class')|safe }}
     {%- if brother.big_brother -%}
     <dt>Big Brother</dt>
-    <dd>{{ link_brother(brother.big_brother) }}</dd>
+    <dd>{{ util.brother_name(brother.big_brother) }}</dd>
     {% endif -%}
     {%- if brother.little_brothers %}
     <dt>Little Brothers</dt>
     <dd>
     {%- for little in brother.little_brothers -%}
-    {{ link_brother(little) }}{{ ', ' if not loop.last }}
+    {{ util.brother_name(little) }}{{ ', ' if not loop.last }}
     {%- endfor -%}
+    </dd>
     {%- endif %}
-    <dt>Status</dt><dd>{{ brother.status }}</dd>
-    {%- if brother.current_positions -%}
-    <dt>Current Position</dt>
-    <dd>{{ brother.current_positions|join(', ', 'position') }}</dd>
-    {%- endif -%}
-    {%- if brother.past_positions -%}
-    <dt>Past Positions</dt>
-    <dd>{{ brother.past_positions|join(', ', 'position') }}</dd>
-    {%- endif -%}
-    {{ elide_info('major')|safe }}
-    {{ display_date('graduation_date')|safe }}
+    {{ util.display_text(brother, 'status') }}
+    {{- util.display_positions(brother, 'current_positions') }}
+    {{- util.display_positions(brother, 'past_positions') }}
+    {{ util.display_text(brother, 'major')|safe }}
+    {{ util.display_date(brother, 'graduation_date')|safe }}
   </dl>
 </div>
 {%- endblock content %}
