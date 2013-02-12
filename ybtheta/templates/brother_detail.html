@@ -12,7 +12,7 @@
 {% block content -%}
 <div class="row">
   <div class="span11">
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal edit-toggle">
       <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
       {{ util.display_text(brother, 'nickname') }}
       {{ util.display_date(brother, 'birthday') }}
@@ -42,11 +42,12 @@
       {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
     </dl>
     {% if form -%}
-    {{ util.render_form(form) }}
+    {{ util.render_form(form, class="edit-toggle") }}
     {%- endif %}
   </div>
   <div class="span1">
-    <a href="#" id="edit">Edit</a>
+    <p><a href="#" id="edit">Edit</a>
+    <p><a href="#" id="cancel">Cancel</a>
   </div>
 </div>
 {%- endblock content %}

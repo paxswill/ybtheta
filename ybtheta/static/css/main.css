@@ -3,3 +3,12 @@ body {
     position: relative;
     padding-top: 40px;
 }
+
+/* Toggleable editing */
+dl.edit-toggle {
+	display: inherit;
+}
+form.edit-toggle {
+	display: none;
+}
+

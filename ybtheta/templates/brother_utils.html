@@ -47,9 +47,9 @@
 </ul>
 {%- endmacro %}
 
-{% macro render_form(form) -%}
-<form method="POST" class="form-horizontal">
   {% for field in form if field.name != "csrf_token" -%}
+{% macro render_form(form, class=None) -%}
+<form method="POST" class="form-horizontal{{ " "+class if class }}">
   <div class="control-group">
     {{ field.label(class="control-label") }}
     <div class="controls">
