@@ -116,13 +116,13 @@ FROM yb_content_field_current_position
 WHERE field_current_position_value IS NOT NULL;""")
 for position in crs.fetchall():
     new_pos = bro.Position(position=position[1], current=True)
-    brother_lookup[position[0]].current_positions.append(new_pos)
+    brother_lookup[position[0]].positions.append(new_pos)
 crs.execute("""SELECT nid, field_positions_value
 FROM yb_content_field_positions
 WHERE field_positions_value IS NOT NULL;""")
 for position in crs.fetchall():
     new_pos = bro.Position(position=position[1])
-    brother_lookup[position[0]].past_positions.append(new_pos)
+    brother_lookup[position[0]].positions.append(new_pos)
 db.session.commit()
 
 

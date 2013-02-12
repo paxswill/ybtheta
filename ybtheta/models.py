@@ -25,12 +25,13 @@ class Brother(db.Model):
     big_id = db.Column(db.Integer, db.ForeignKey('brothers.id'), nullable=True)
     big_brother = db.relationship('Brother', backref='little_brothers',
             remote_side='Brother.id')
-    current_positions = db.relationship('Position', back_populates='brother',
+    current_positions = db.relationship('Position',
             primaryjoin='(Brother.id == Position.brother_id) & '\
             '(Position.current == True)')
-    past_positions = db.relationship('Position', back_populates='brother',
+    past_positions = db.relationship('Position',
             primaryjoin='(Brother.id == Position.brother_id) & '\
             '(Position.current == False)')
+    positions = db.relationship('Position', backref='brother')
     status = db.Column(db.Enum('Alumni', 'Student', 'Co-Op', 'Inactive',
             'Pledge', name='brother_status'), nullable=False,
             default='Student')
@@ -73,7 +74,6 @@ class Position(db.Model):
     date = db.Column(db.Date)
     current = db.Column(db.Boolean, nullable=False, default=False)
     brother_id = db.Column(db.Integer, db.ForeignKey('brothers.id'))
-    brother = db.relationship('Brother', single_parent=True)
 
 
     def __repr__(self):

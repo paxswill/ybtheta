@@ -45,8 +45,7 @@ class BrotherForm(Form):
     initiation = DateField('Initiation Date', validators=[Optional()])
     pledge_class = TextField('Pledge Class')
     # big_brother
-    current_positions = FieldList(FormField(PositionForm))
-    past_positions = FieldList(FormField(PositionForm))
+    positions = FieldList(FormField(PositionForm))
     status = SelectField('Status', choices=[(val, val) for val in ('Alumni',
         'Student', 'Co-Op', 'Inactive', 'Pledge')])
     graduation_date = DateField('Graduation Date', validators=[Optional()])
