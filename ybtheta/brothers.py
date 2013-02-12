@@ -2,6 +2,9 @@
 from datetime import date, datetime
 
 from flask import render_template
+from flask.ext.wtf import Form, TextField, DateField, HiddenField, Required
+from flask.ext.wtf.html5 import EmailField, TelField, IntegerField
+
 from ybtheta import app, db
 
 
@@ -52,7 +55,8 @@ def brother_detail(roll_num, ordinal):
     # We only need one Brother
     brother_query = brother_query.limit(1)
     brother = brother_query.first_or_404()
-    return render_template('brother_detail.html', brother=brother)
+    return render_template('brother_detail.html', brother=brother,
+            form=EditBrotherForm(obj=brother))
 
 
 
@@ -62,7 +66,31 @@ def brother_detail_id(id_num):
     if brother.roll_number is not None:
         return redirect(url_for('brother_detail',
             roll_num=brother.roll_number))
-    return render_template('brother_detail.html', brother=brother)
+    return render_template('brother_detail.html', brother=brother,
+            form=EditBrotherForm(obj=brother))
+
+
+class EditBrotherForm(Form):
+    id = HiddenField()
+    name = TextField('Name', validators=[Required()])
+    full_name = TextField('Full Name')
+    nickname = TextField('Nickname')
+    birthday = DateField('Birthday')
+    # picture
+    roll_number = IntegerField('Roll Number')
+    page_number = IntegerField('Page Number')
+    chapter = TextField('Chapter', validators=[Required()])
+    initiation = DateField('Initiation Date')
+    pledge_class = TextField('Pledge Class')
+    # big_brother
+    # current_positions
+    # past_positions
+    graduation_date = DateField('Graduation Date')
+    major = TextField('Major')
+    # emails
+    # phone_numbers
+    # addresses
+    quotes = TextField('Quotes')
 
 
 # SQLAlchemy models
