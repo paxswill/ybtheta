@@ -35,8 +35,3 @@ def activities():
 def contact():
     return render_template('placeholder.html', name='contact')
 
-
-# Misc functions
-
-if __name__ == '__main__':
-    app.run()
