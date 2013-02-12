@@ -12,7 +12,7 @@ class PositionForm(WTForm):
     position = SelectField('Position', choices=
             [(val, val) for val in Position.POSITIONS.keys()])
     date = DateField('Start Date', validators=[Optional()])
-    current = BooleanField('Current', default=False, validators=[Required()])
+    current = BooleanField('Current', default=False)
 
 
 class BrotherContactInfo(WTForm):
