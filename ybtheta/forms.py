@@ -1,4 +1,5 @@
-from flask.ext.wtf import Form, TextField, DateField, HiddenField, Required
+from flask.ext.wtf import (Form, TextField, TextAreaField, DateField,
+        HiddenField, Required, Optional)
 from flask.ext.wtf.html5 import EmailField, TelField, IntegerField
 
 
@@ -7,17 +8,17 @@ class EditBrotherForm(Form):
     name = TextField('Name', validators=[Required()])
     full_name = TextField('Full Name')
     nickname = TextField('Nickname')
-    birthday = DateField('Birthday')
+    birthday = DateField('Birthday', validators=[Optional()])
     # picture
-    roll_number = IntegerField('Roll Number')
-    page_number = IntegerField('Page Number')
+    roll_number = IntegerField('Roll Number', validators=[Optional()])
+    page_number = IntegerField('Page Number', validators=[Optional()])
     chapter = TextField('Chapter', validators=[Required()])
-    initiation = DateField('Initiation Date')
+    initiation = DateField('Initiation Date', validators=[Optional()])
     pledge_class = TextField('Pledge Class')
     # big_brother
     # current_positions
     # past_positions
-    graduation_date = DateField('Graduation Date')
+    graduation_date = DateField('Graduation Date', validators=[Optional()])
     major = TextField('Major')
     # emails
     # phone_numbers
