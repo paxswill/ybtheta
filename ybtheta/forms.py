@@ -3,7 +3,7 @@ from flask.ext.wtf import (Form, TextField, TextAreaField, DateField,
 from flask.ext.wtf.html5 import EmailField, TelField, IntegerField
 
 
-class EditBrotherForm(Form):
+class BrotherForm(Form):
     id = HiddenField()
     name = TextField('Name', validators=[Required()])
     full_name = TextField('Full Name')

@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, flash
 from ybtheta import app, db
 from ybtheta.models import (Brother, Position, EmailAddress, PhoneNumber,
     MailingAddress)
-from ybtheta.forms import EditBrotherForm
+from ybtheta.forms import BrotherForm
 
 
 # Flask Views
@@ -55,7 +55,7 @@ def brother_detail(roll_num, ordinal):
     brother_query = brother_query.limit(1)
     brother = brother_query.first_or_404()
     return render_template('brother_detail.html', brother=brother,
-            form=EditBrotherForm(obj=brother))
+            form=BrotherForm(obj=brother))
 
 
 @app.route('/brothers/id/<int:id_num>')
@@ -65,7 +65,7 @@ def brother_detail_id(id_num):
         return redirect(url_for('brother_detail',
             roll_num=brother.roll_number))
     return render_template('brother_detail.html', brother=brother,
-            form=EditBrotherForm(obj=brother))
+            form=BrotherForm(obj=brother))
 
 
 @app.route('/brothers/<int:roll_num>/edit', methods=['GET', 'POST'],
@@ -78,7 +78,7 @@ def edit_brother(roll_num, id_num):
     else:
         brother = Brother.query.filter_by(roll_number=roll_num).order_by(
                 Brother.page_number).first()
-    form = EditBrotherForm(request.form, brother)
+    form = BrotherForm(request.form, brother)
     if form.validate_on_submit():
         flash(u"Brother updated", 'success')
         for field in form:
