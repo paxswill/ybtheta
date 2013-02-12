@@ -11,7 +11,7 @@
 {%- endblock header %}
 {% block content -%}
 <div class="row">
-  <div class="span11">
+  <div class="span8">
     <dl class="dl-horizontal edit-toggle">
       <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
       {{ util.display_text(brother, 'nickname') }}
@@ -45,9 +45,11 @@
     {{ util.render_form(form, class="edit-toggle") }}
     {%- endif %}
   </div>
-  <div class="span1">
-    <p><a href="#" id="edit">Edit</a>
-    <p><a href="#" id="cancel">Cancel</a>
+  <div class="span4">
+    <div class="btn-group pull-right">
+      <a class="btn" href="#" id="edit">Edit</a>
+      <a class="btn" href="#" id="cancel">Cancel</a>
+    </div>
   </div>
 </div>
 {%- endblock content %}
