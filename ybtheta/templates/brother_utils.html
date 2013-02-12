@@ -48,7 +48,8 @@
 {%- endmacro %}
 
 {% macro render_form(form, class=None) -%}
-<form method="POST" class="form-horizontal{{ " "+class if class }}">
+<form method="POST" class="form-horizontal{{ " "+class if class }}"
+  action="/brothers/id/{{ form.id.data }}/edit">
   {% for field in form if field.widget.input_type != "hidden" %}
   <div class="control-group{{ " error" if field.errors }}">
     {{ field.label(class="control-label") }}

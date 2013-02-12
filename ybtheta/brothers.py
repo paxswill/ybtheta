@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import render_template
+from flask import render_template, request, redirect, url_for, flash
 
 from ybtheta import app, db
 from ybtheta.models import (Brother, Position, EmailAddress, PhoneNumber,
@@ -58,7 +58,6 @@ def brother_detail(roll_num, ordinal):
             form=EditBrotherForm(obj=brother))
 
 
-
 @app.route('/brothers/id/<int:id_num>')
 def brother_detail_id(id_num):
     brother = Brother.query.get_or_404(id_num)
@@ -67,4 +66,29 @@ def brother_detail_id(id_num):
             roll_num=brother.roll_number))
     return render_template('brother_detail.html', brother=brother,
             form=EditBrotherForm(obj=brother))
+
+
+@app.route('/brothers/<int:roll_num>/edit', methods=['GET', 'POST'],
+        defaults={'id_num': None})
+@app.route('/brothers/id/<int:id_num>/edit', methods=['GET', 'POST'],
+        defaults={'roll_num': None})
+def edit_brother(roll_num, id_num):
+    if id_num:
+        brother = Brother.query.get(id_num)
+    else:
+        brother = Brother.query.filter_by(roll_number=roll_num).order_by(
+                Brother.page_number).first()
+    form = EditBrotherForm(request.form, brother)
+    if form.validate_on_submit():
+        flash(u"Brother updated", 'success')
+        for field in form:
+            print "{name}: {value}".format(name=field.name, value=field.data)
+        form.populate_obj(brother)
+        db.session.commit()
+        if id_num:
+            return redirect(url_for('brother_detail_id', id_num=id_num))
+        else:
+            return redirect(url_for('brother_details', roll_num=roll_num))
+    return render_template('brother_detail.html', brother=brother, form=form,
+            start_edit=True)
 
