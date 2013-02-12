@@ -23,7 +23,7 @@ class EditBrotherForm(Form):
     # emails
     # phone_numbers
     # addresses
-    quotes = TextField('Quotes')
+    quotes = TextAreaField('Quotes')
 
 
 class LoginForm(Form):
