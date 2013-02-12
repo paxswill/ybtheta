@@ -1,9 +1,9 @@
 from flask import (g, session, redirect, flash, request, render_template,
 url_for, abort)
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.wtf import Form, TextField, Required
 
 from ybtheta import app, db, oid
+from ybtheta.models import User, OpenID
+from ybtheta.forms import LoginForm, CreateAccountForm
 
 
 # Flask hooks
@@ -77,46 +77,4 @@ def logout():
     session.pop('openid', None)
     flash(u'Logged out.', 'info')
     return redirect(oid.get_next_url())
-
-
-# Database models
-class User(db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    real_name = db.Column(db.String(100))
-    screen_name = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
-
-    def __init__(self, real_name, screen_name, email):
-        self.real_name = real_name
-        self.screen_name = screen_name
-        self.email = email
-
-    def __repr__(self):
-        return "<User {}>".format(self.username)
-
-
-class OpenID(db.Model):
-    __tablename__ = 'openids'
-
-    id = db.Column(db.Integer, primary_key=True)
-    openid = db.Column(db.String(250), nullable=False, index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('User', backref=db.backref('openids',
-        lazy='dynamic'))
-
-    def __init__(self, openid, user):
-        self.openid = openid
-        self.user = user
-
-
-# WTForms
-class LoginForm(Form):
-    openid = TextField('OpenID URL', validators=[Required()])
-
-class CreateAccountForm(Form):
-    real_name = TextField('Real Name', validators=[Required()])
-    screen_name = TextField('Screen Name', validators=[Required()])
-    email = TextField('Email', validators=[Required()])
 
