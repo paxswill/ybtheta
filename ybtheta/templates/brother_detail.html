@@ -13,7 +13,8 @@
 <div class="row">
   <div class="span8">
     <dl class="dl-horizontal edit-toggle">
-      <dt>Full Name</dt><dd>{{ brother.full_name|default(brother.name) }}</dd>
+      <dt>Full Name</dt>
+      <dd>{{ brother.full_name if brother.full_name else brother.name }}</dd>
       {{ util.display_text(brother, 'nickname') }}
       {{ util.display_date(brother, 'birthday') }}
       {{ util.display_text(brother, 'chapter') }}
