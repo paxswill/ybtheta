@@ -32,6 +32,20 @@
 {%- endif %}
 {%- endmacro %}
 
+{% macro display_contact(brother, property, label=None) -%}
+{% if brother|attr(property) -%}
+    <dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
+    <dd>
+      <dl class="dl-horizontal">
+    {% for info in brother|attr(property) -%}
+    <dt>{{ info.description }}</dt>
+        <dd>{{ info.info() }}</dd>
+    {%- endfor %}
+      </dl>
+    </dd>
+{%- endif %}
+{%- endmacro %}
+
 {% macro brother_thumbs(brothers) -%}
 <ul class="thumbnails">
 {%- for brother in brothers -%}

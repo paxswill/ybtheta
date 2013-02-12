@@ -43,6 +43,9 @@
       {{- util.display_positions(brother, 'past_positions') }}
       {{ util.display_text(brother, 'major') }}
       {{ util.display_date(brother, 'graduation_date', label="Graduation Date") }}
+      {{ util.display_contact(brother, 'emails', label="Email Addresses") }}
+      {{ util.display_contact(brother, 'phone_numbers') }}
+      {{ util.display_contact(brother, 'addresses', label='Mailing Addresses') }}
     </dl>
     {% endif %}
     {% if form -%}
