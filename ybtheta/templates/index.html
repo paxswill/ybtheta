@@ -1,9 +1,39 @@
 {% extends "layout.html" %}
 {% block header -%}
+{%- if carousel_images -%}
+<div id="headerSpinner" class="carousel slide">
+  <ol class="carousel-indicators">
+    {%- for i in range(carousel_images|count) -%}
+    <li data-target="#headerSpinner" data-slide-to="{{ i }}"{{ ' class="active"'|safe if loop.first }}></li>
+    {%- endfor -%}
+  </ol>
+  <div class="carousel-inner">
+    {%- for image, caption in carousel_images.items() -%}
+    <div class="item{{ ' active' if loop.first }}">
+      <img src="{{ image }}" alt>
+      {%- if caption -%}
+      <div class="container">
+        <div class="carousel-caption">
+          <p class="lead">{{ caption }}</p>
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endfor -%}
+  </div>
+  <a class="carousel-control left" href="#headerSpinner" data-slide="prev">
+    &lsaquo;
+  </a>
+  <a class="carousel-control right" href="#headerSpinner" data-slide="next">
+    &rsaquo;
+  </a>
+</div>
+{%- else -%}
 <div class="hero-unit">
   <h1>Theta Tau</h1>
   <p>Upsilon Beta Chapter at Old Dominion University</p>
 </div>
+{%- endif %}
 {%- endblock header %}
 {% block content -%}
 <p>This ain't {{ "the "+top_name if top_name else "a placeholder" }} page.</p>
