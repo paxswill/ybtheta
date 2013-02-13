@@ -1,5 +1,5 @@
 from flask.ext.wtf import (Form, BooleanField, DateField, FieldList,
-        FormField, HiddenField, RadioField, SelectField, TextField,
+        FormField, HiddenField, RadioField, SelectField, StringField,
         TextAreaField, Email, Optional, Required)
 from flask.ext.wtf.html5 import EmailField, TelField, IntegerField
 from wtforms import Form as WTForm
@@ -17,7 +17,7 @@ class PositionForm(WTForm):
 
 class BrotherContactInfo(WTForm):
     id = HiddenField()
-    description = TextField('Description')
+    description = StringField('Description')
 
 
 class BrotherEmail(BrotherContactInfo):
@@ -34,22 +34,22 @@ class BrotherAddress(BrotherContactInfo):
 
 class BrotherForm(Form):
     id = HiddenField()
-    name = TextField('Name', validators=[Required()])
-    full_name = TextField('Full Name')
-    nickname = TextField('Nickname')
+    name = StringField('Name', validators=[Required()])
+    full_name = StringField('Full Name')
+    nickname = StringField('Nickname')
     birthday = DateField('Birthday', validators=[Optional()])
     # picture
     roll_number = IntegerField('Roll Number', validators=[Optional()])
     page_number = IntegerField('Page Number', validators=[Optional()])
-    chapter = TextField('Chapter', validators=[Required()])
+    chapter = StringField('Chapter', validators=[Required()])
     initiation = DateField('Initiation Date', validators=[Optional()])
-    pledge_class = TextField('Pledge Class')
+    pledge_class = StringField('Pledge Class')
     # big_brother
     positions = FieldList(FormField(PositionForm))
     status = SelectField('Status', choices=[(val, val) for val in ('Alumni',
         'Student', 'Co-Op', 'Inactive', 'Pledge')])
     graduation_date = DateField('Graduation Date', validators=[Optional()])
-    major = TextField('Major')
+    major = StringField('Major')
     emails = FieldList(FormField(BrotherEmail))
     phone_number = FieldList(FormField(BrotherPhoneNumber))
     addresses = FieldList(FormField(BrotherAddress))
@@ -57,11 +57,11 @@ class BrotherForm(Form):
 
 
 class LoginForm(Form):
-    openid = TextField('OpenID URL', validators=[Required()])
+    openid = StringField('OpenID URL', validators=[Required()])
 
 
 class CreateAccountForm(Form):
-    real_name = TextField('Real Name', validators=[Required()])
-    screen_name = TextField('Screen Name', validators=[Required()])
-    email = TextField('Email', validators=[Required()])
+    real_name = StringField('Real Name', validators=[Required()])
+    screen_name = StringField('Screen Name', validators=[Required()])
+    email = StringField('Email', validators=[Required()])
 
