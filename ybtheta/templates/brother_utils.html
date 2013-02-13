@@ -36,12 +36,14 @@
 {% if brother|attr(property) -%}
     <dt>{{ label if label else property|replace('_', ' ')|title }}</dt>
     <dd>
-      <dl class="dl-horizontal">
-    {% for info in brother|attr(property) -%}
-    <dt>{{ info.description }}</dt>
-        <dd>{{ info.info() }}</dd>
-    {%- endfor %}
-      </dl>
+      <table class="table table-condensed table-bordered">
+        {% for info in brother|attr(property) %}
+        <tr>
+          <td><strong>{{ info.description if info.description }}</strong></td>
+          <td>{{ info.info() }}</td>
+        </tr>
+        {% endfor %}
+      </table>
     </dd>
 {%- endif %}
 {%- endmacro %}
