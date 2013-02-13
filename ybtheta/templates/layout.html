@@ -1,3 +1,6 @@
+{% extends "bootstrap_responsive.html" %}
+{% import "bootstrap_wtf.html" as wtf %}
+
 {# The following two lines is a stopgap measure until breadcrumbs and page
 titles are set properly. -#}
 {% set top_name = top_name|default(name|default('placeholder')) -%}
@@ -7,110 +10,113 @@ titles are set properly. -#}
  class="{{ classes }}"
 {%- endif -%}
 {% endmacro -%}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    {% block head -%}
-    <title>{{ title|title }} &mdash; Theta Tau at ODU</title>
-    <!-- Be responsive to screen size -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Incude Twitter Bootstrap -->
-    <link href="{{ 'css/bootstrap.css'|bootstrap_find_resource }}" rel="stylesheet" media="screen">
-    <link href="/static/main.css" rel="stylesheet">
-    <link href="{{ 'css/bootstrap-responsive.css'|bootstrap_find_resource }}" rel=stylesheet>
-    <link href="{{ url_for('static', filename='favicon.png') }}" rel="shortcut icon">
-    {%- endblock head %}
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <!-- Expand collapsed navbar -->
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <!-- Show the "brand" -->
-          <a class="brand" href="/">&Theta;&Tau; ODU</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li {{ elide_class("active" if top_name == "about") }}>
-                <a href="/about">About</a>
-              </li>
-              <li {{ elide_class("active" if top_name == "rush") }}>
-                <a href="/rush">Rush</a>
-              </li>
-              <li {{ elide_class("dropdown active" if top_name == "brothers" else "dropdown") }}>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Brothers
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="/brothers">Students</a></li>
-                  <li><a href="/brothers/alumni">Alumni</a></li>
-                  <li><a href="/brothers/all">All Brothers</a></li>
-                </ul>
-              </li>
-              <li {{ elide_class("active" if top_name == "activities") }}>
-                <a href="/activities">Activities</a>
-              </li>
-              <li {{ elide_class("active" if top_name == "contact") }}>
-                <a href="/contact">Contact</a>
-              </li>
-            </ul>
-            <ul class="nav pull-right">
-              {% if g.user -%}
-              <li><a href="/account/{{ g.user.screen_name }}">{{ g.user.screen_name }}</a></li>
-              <li><a href="/logout">Log out</a></li>
-              {%- else -%}
-              <li{{ ' class="active"'|safe if 'login' == top_name}}>
-                <a href="/login">Login</a>
-              </li>
-              {%- endif %}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <!-- Not navigation, i.e. the content, the stuff that people read -->
-    {#- The body block shouldn't be overridden wholesale. Instead, on of the
-        sub-blocks should be individually overridden. -#}
-    {% block body -%}
-    {% block header -%}
-    {% endblock header -%}
-    {#- This big chunk is responsible for displaying any flashes that may
-        have been dispatched, in order of importance, with proper
-        color-coding. -#}
-    {%- for category in ['error', 'warn', 'success', 'info'] -%}
-      {% with messages = get_flashed_messages(category_filter=[category]) -%}
-        {% if messages -%}
-          {% for message in messages -%}
-      <div class="alert alert-{{ category }}">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        {{ message }}
-      </div>
-          {%- endfor %}
-        {%- endif %}
-      {%- endwith %}
-    {%- endfor %}
-    {#- Override this section for the actual content -#}
+
+{% block style -%}
+{{ super() }}
+<link href="/static/main.css" rel="stylesheet">
+{%- endblock %}
+
+{% block style_navbar_padding -%}
+<style>
+  body {
+    padding-top: 40px;
+  }
+</style>
+{%- endblock %}
+
+{% block title -%}
+{{ title|title }} &mdash; Theta Tau at ODU
+{%- endblock %}
+
+{% block favicons -%}
+<link href="{{ url_for('static', filename='favicon.png') }}" rel="shortcut icon">
+{%- endblock %}
+
+{% block body_content -%}
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
     <div class="container">
-      {% block content -%}
-      <h1>A Heading</h1>
-      <p>Body content goes here.</p>
-      {%- endblock content %}
+      <!-- Expand collapsed navbar -->
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <!-- Show the "brand" -->
+      <a class="brand" href="/">&Theta;&Tau; ODU</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li {{ elide_class("active" if top_name == "about") }}>
+            <a href="/about">About</a>
+          </li>
+          <li {{ elide_class("active" if top_name == "rush") }}>
+            <a href="/rush">Rush</a>
+          </li>
+          <li {{ elide_class("dropdown active" if top_name == "brothers" else "dropdown") }}>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Brothers
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/brothers">Students</a></li>
+              <li><a href="/brothers/alumni">Alumni</a></li>
+              <li><a href="/brothers/all">All Brothers</a></li>
+            </ul>
+          </li>
+          <li {{ elide_class("active" if top_name == "activities") }}>
+            <a href="/activities">Activities</a>
+          </li>
+          <li {{ elide_class("active" if top_name == "contact") }}>
+            <a href="/contact">Contact</a>
+          </li>
+        </ul>
+        <ul class="nav pull-right">
+          {% if g.user -%}
+          <li><a href="/account/{{ g.user.screen_name }}">{{ g.user.screen_name }}</a></li>
+          <li><a href="/logout">Log out</a></li>
+          {%- else -%}
+          <li{{ ' class="active"'|safe if 'login' == top_name}}>
+            <a href="/login">Login</a>
+          </li>
+          {%- endif %}
+        </ul>
+      </div>
     </div>
-    <footer>
-      <p>Placeholder Footer</p>
-    </footer>
-    {%- endblock body %}
-    {%- block scripts %}
-    {#- Overrideable if a page needs a specific script -#}
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="{{ 'js/bootstrap.js'|bootstrap_find_resource }}"></script>
-    <script src="/static/holder.js"></script>
-    {%- endblock scripts %}
-  </body>
-</html>
+  </div>
+</nav>
+<!-- Not navigation, i.e. the content, the stuff that people read -->
+{% block header -%}
+{% endblock header -%}
+{#- This big chunk is responsible for displaying any flashes that may
+    have been dispatched, in order of importance, with proper
+    color-coding. -#}
+{%- for category in ['error', 'warn', 'success', 'info'] -%}
+  {% with messages = get_flashed_messages(category_filter=[category]) -%}
+    {% if messages -%}
+      {% for message in messages -%}
+  <div class="alert alert-{{ category }}">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    {{ message }}
+  </div>
+      {%- endfor %}
+    {%- endif %}
+  {%- endwith %}
+{%- endfor %}
+{#- Override this section for the actual content -#}
+<div class="container">
+  {% block content -%}
+  <h1>A Heading</h1>
+  <p>Body content goes here.</p>
+  {%- endblock content %}
+</div>
+<footer>
+  <p>Placeholder Footer</p>
+</footer>
+{%- endblock %}
+
+{% block bootstrap_js_bottom -%}
+{{ super() }}
+<script src="/static/holder.js"></script>
+{%- endblock %}
+

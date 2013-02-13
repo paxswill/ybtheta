@@ -1,9 +1,3 @@
-/* Shift body down 40px for the fixed navbar */
-body {
-    position: relative;
-    padding-top: 40px;
-}
-
 /* Toggleable editing */
 dl.edit-toggle {
 	display: inherit;
