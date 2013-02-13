@@ -51,7 +51,7 @@ class BrotherForm(Form):
     graduation_date = DateField('Graduation Date', validators=[Optional()])
     major = StringField('Major')
     emails = FieldList(FormField(BrotherEmail))
-    phone_number = FieldList(FormField(BrotherPhoneNumber))
+    phone_numbers = FieldList(FormField(BrotherPhoneNumber))
     addresses = FieldList(FormField(BrotherAddress))
     quotes = TextAreaField('Quotes')
 
