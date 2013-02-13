@@ -72,6 +72,9 @@
     {% for sub_field in field %}
     {{ render_field(sub_field) }}
     {% endfor %}
+    {% for error in field.errors %}
+    <span class="help-inline">{{ error }}</span>
+    {% endfor %}
   </div>
   {% elif field.type == "FormField" %}
   <!-- FormField -->
@@ -89,6 +92,9 @@
       {{ field }}
       {{ field.label.text }}
     </label>
+    {% for error in field.errors %}
+    <span class="help-inline">{{ error }}</span>
+    {% endfor %}
   </div>
   {% else %}
   <!-- Misc widget -->
