@@ -84,10 +84,12 @@
     {% endfor %}
   {% elif field.widget.input_type == "checkbox" %}
   <!-- Checkbox widgets -->
+  <div class="controls">
     <label class="checkbox">
       {{ field }}
       {{ field.label.text }}
     </label>
+  </div>
   {% else %}
   <!-- Misc widget -->
   {{ field.label(class="control-label") }}
