@@ -65,5 +65,5 @@
 {%- endblock content %}
 {% block scripts -%}
 {{ super() }}
-{{ '<script src="/static/js/main.js"></script>'|safe if not start_edit }}
+{{ '<script src="/static/main.js"></script>'|safe if not start_edit }}
 {%- endblock scripts %}

@@ -3,6 +3,7 @@ import os
 from flask import (Flask, render_template, g, session, redirect, flash, request,
 send_from_directory)
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.bootstrap import Bootstrap
 from flask.ext import openid
 
 from ybtheta.markdown_page import markdown_page
@@ -10,6 +11,7 @@ from ybtheta.markdown_page import markdown_page
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('settings.cfg')
 oid = openid.OpenID(app)
+Bootstrap(app)
 # Database configuration
 db = SQLAlchemy(app)
 

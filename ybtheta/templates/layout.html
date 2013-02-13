@@ -15,10 +15,10 @@ titles are set properly. -#}
     <!-- Be responsive to screen size -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Incude Twitter Bootstrap -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="/static/css/main.css" rel="stylesheet">
-    <link href="/static/css/bootstrap-responsive.css" rel=stylesheet>
-    <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="shortcut icon">
+    <link href="{{ 'css/bootstrap.css'|bootstrap_find_resource }}" rel="stylesheet" media="screen">
+    <link href="/static/main.css" rel="stylesheet">
+    <link href="{{ 'css/bootstrap-responsive.css'|bootstrap_find_resource }}" rel=stylesheet>
+    <link href="{{ url_for('static', filename='favicon.png') }}" rel="shortcut icon">
     {%- endblock head %}
   </head>
   <body>
@@ -109,8 +109,8 @@ titles are set properly. -#}
     {%- block scripts %}
     {#- Overrideable if a page needs a specific script -#}
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/static/js/bootstrap.js"></script>
-    <script src="/static/js/holder.js"></script>
+    <script src="{{ 'js/bootstrap.js'|bootstrap_find_resource }}"></script>
+    <script src="/static/holder.js"></script>
     {%- endblock scripts %}
   </body>
 </html>
