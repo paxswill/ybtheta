@@ -2,11 +2,11 @@ from __future__ import absolute_import
 
 from sqlalchemy.ext.declarative import declared_attr
 
-from ..util import AutoID, unistr
 from ..database import db
+from ..util import AutoID, AutoName, unistr
 
 
-class Identity(db.Model, AutoID):
+class Identity(db.Model, AutoName, AutoID):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
@@ -28,7 +28,7 @@ class Identity(db.Model, AutoID):
 
 
 @unistr
-class User(db.Model, AutoID):
+class User(db.Model, AutoName, AutoID):
 
     #: A :py:class:`list` of the identites for this :py:class:`User`
     identities = db.relationship('Identity', back_populates='user')
