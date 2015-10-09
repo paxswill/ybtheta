@@ -2,8 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 from sqlalchemy.ext.declarative import declared_attr
 
-from ..app import db
 from ..util import AutoID, unistr
+from ..database import db
 
 
 class Identity(db.Model, AutoID):
