@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
 
 from sqlalchemy.ext.declarative import declared_attr
 
@@ -14,7 +14,7 @@ class Identity(db.Model, AutoID):
     user = db.relationship('User', back_populates='identity')
 
     #: Polymorphic inheritance type discriminator
-    type_ = db.Column(db.String(30), convert_unicode=True)
+    type_ = db.Column(db.String(30, convert_unicode=True))
 
     @declared_attr
     def __mapper_args__(cls):
@@ -41,7 +41,7 @@ class User(db.Model, AutoID):
 
     @property
     def name(self):
-        if self.primary_identity and hasattr(self.primary_identity, 'name')
+        if self.primary_identity and hasattr(self.primary_identity, 'name'):
             return self.primary_identity.name
         return str(self)
 
