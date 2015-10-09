@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from flask import Flask
 
 from . import base
+from .auth import blueprint
 from .database import db
 
 def create_app(config=None, **kwargs):
