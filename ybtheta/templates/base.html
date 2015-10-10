@@ -28,7 +28,7 @@
         <div class="carousel-inner" role="listbox">
           {% for slide_num in range(3) %}
           <div class="item{{ " active" if loop.first }}">
-            <img src="//unsplash.it/1500/600?random={{ 800 + slide_num * 11 }}">
+            <img src="//unsplash.it/1500/600?random={{ slide_num }}">
           </div>
           {% endfor %}
         </div>
