@@ -15,7 +15,48 @@
   </head>
   <body>
     {% block body %}
-    <h1>Hi there!</h1>
+      {% block banner %}
+      {% with carousel_id="banner-carousel" %}
+      <div id="{{ carousel_id}}" class="carousel slide" data-ride="carousel">
+        <!-- indicators -->
+        <ol class="carousel-indicators">
+          {% for slide_num in range(3) %}
+          <li data-target="#{{ carousel_id }}" data-slide-to="{{ slide_num }}"{{ 'class="active"'|safe if loop.first }}></li>
+          {% endfor %}
+        </ol>
+        <!-- slides -->
+        <div class="carousel-inner" role="listbox">
+          {% for slide_num in range(3) %}
+          <div class="item{{ " active" if loop.first }}">
+            <img src="//unsplash.it/1500/600?random={{ 800 + slide_num * 11 }}">
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endwith %}
+      {% endblock banner %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <nav>
+            <ul class="nav">
+              <li><a href="#"><h4>&Theta;&Tau; at ODU</h4></a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Rush</a></li>
+              <li><a href="#">Brothers</a></li>
+              <li><a href="#">Events</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Login</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-md-9">
+          {% block content %}
+          <h1>Content Here!</h1>
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
     {% endblock body %}
     {% block scripts %}
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>    
