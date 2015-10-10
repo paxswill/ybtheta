@@ -37,4 +37,5 @@ class Article(db.Model, AutoID, AutoName, Timestamped):
         return formatted
 
 
-admin.add_view(ModelView(Article, db.session))
+article_admin = ModelView(Article, db.session, endpoint='article_admin')
+admin.add_view(article_admin)

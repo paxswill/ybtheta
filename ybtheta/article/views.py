@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, abort
 from .models import Article
 
 
-blueprint = Blueprint('auth', 'ybtheta.article', template_folder='templates')
+blueprint = Blueprint('article', 'ybtheta.article', template_folder='templates')
 
 
 @blueprint.route('/<int:article_id>/')
