@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from flask import Flask
 import six
 
-from . import base, article
+from . import article, page_rename
 from .database import db
 from .admin_view import admin
 
@@ -22,6 +22,6 @@ def create_app(config=None, **kwargs):
     db.init_app(app)
     admin.init_app(app)
     # Add the blueprints
-    app.register_blueprint(base.blueprint)
     app.register_blueprint(article.blueprint, url_prefix='/articles')
+    app.register_blueprint(page_rename.blueprint)
     return app

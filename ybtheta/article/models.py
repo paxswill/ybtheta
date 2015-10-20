@@ -7,10 +7,14 @@ from flask.ext.admin.contrib.sqla import ModelView
 
 from ..database import db
 from ..util import AutoID, AutoName, Timestamped, utc
+from ..page_rename import RenamedPage
 from ..admin_view import admin
 
 
-class Article(db.Model, AutoID, AutoName, Timestamped):
+class Article(RenamedPage, Timestamped):
+
+    id = db.Column(db.Integer, db.ForeignKey('renamedpage.id'),
+            primary_key=True)
 
     title = db.Column(db.String(100, convert_unicode=True), nullable=False)
 
@@ -37,5 +41,9 @@ class Article(db.Model, AutoID, AutoName, Timestamped):
         return formatted
 
 
-article_admin = ModelView(Article, db.session, endpoint='article_admin')
+class ExcludeTypeView(ModelView):
+    column_exclude_list = ['type_']
+    form_excluded_columns = column_exclude_list
+
+article_admin = ExcludeTypeView(Article, db.session, endpoint='article_admin')
 admin.add_view(article_admin)
