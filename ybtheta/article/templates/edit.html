@@ -1,0 +1,30 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+{% block title -%}
+Upsilon Beta: {% if edit is defined and edit -%}
+{{ form.title.data }}
+{%- else -%}
+Create Article
+{%- endif %}
+{%- endblock %}
+
+{% block content %}
+{% if edit is defined and edit %}
+<h1>Edit {{ form.title.data }}</h1>
+{% else %}
+<h1>Create Article</h1>
+{% endif %}
+{% block article_form %}
+<form method="post">
+  {{ macros.render_input(form.csrf_token) }}
+  {{ macros.render_input(form.title) }}
+  {{ macros.render_input(form.text) }}
+  <button type="submit" name="save" value="save" class="btn btn-primary">Save</button>
+  <button type="submit" name="preview" value="preview" class="btn btn-default">Preview</button"
+  {% if edit is defined and edit %}
+  <button type="submit" name="delete" value="delete" class="btn btn-danger">Delete</button>
+  {% endif %}
+</form>
+{% endblock article_form %}
+{% endblock content %}

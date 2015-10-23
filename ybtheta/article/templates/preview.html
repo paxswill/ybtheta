@@ -1,0 +1,11 @@
+{% extends 'edit.html' %}
+
+{% block article_form %}
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Preview</h3></div>
+  <div class="panel-body">
+    {{ form.text.data|markdown|safe }}
+  </div>
+</div>
+{{ super() }}
+{% endblock article_form %}

@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 import datetime as dt
 from flask import escape
-from flask.ext.admin.contrib.sqla import ModelView
 
 from ..database import db
 from ..util import AutoID, AutoName, Timestamped, utc
@@ -30,11 +29,3 @@ class Article(RenamedPage, Timestamped):
 
     def __repr__(self):
         return "Article({a.id}, {a.title})".format(a=self)
-
-
-class ExcludeTypeView(ModelView):
-    column_exclude_list = ['type_']
-    form_excluded_columns = column_exclude_list
-
-article_admin = ExcludeTypeView(Article, db.session, endpoint='article_admin')
-admin.add_view(article_admin)
