@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
-from flask import Flask
+from flask import Flask, escape
+import markdown
 import six
 
 from . import article, page_rename
@@ -24,4 +25,18 @@ def create_app(config=None, **kwargs):
     # Add the blueprints
     app.register_blueprint(article.blueprint, url_prefix='/articles')
     app.register_blueprint(page_rename.blueprint)
+    # Configure Jinja a little bit
+    app.jinja_env.filters['markdown'] = markdown_filter
     return app
+
+
+def markdown_filter(markup_text):
+    escaped = escape(markup_text)
+    formatted = markdown.markdown(escaped,
+                                  extensions=[
+                                      'markdown.extensions.tables',
+                                      'markdown.extensions.smart_strong',
+                                      'markdown.extensions.smarty',
+                                      ],
+                                  output_format='html5')
+    return formatted
