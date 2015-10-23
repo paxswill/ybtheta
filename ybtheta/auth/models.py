@@ -1,17 +1,19 @@
 from __future__ import absolute_import
 
 from sqlalchemy.ext.declarative import declared_attr
+from flask.ext.login import UserMixin
 
 from ..database import db
-from ..util import AutoID, AutoName, unistr
+from ..util import AutoID, AutoName
 
 
-class Identity(db.Model, AutoName, AutoID):
+class Identity(db.Model, AutoName, AutoID, UserMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     #: The :py:class:`User` this identity refers to.
-    user = db.relationship('User', back_populates='identity')
+    user = db.relationship('User', backref='identities',
+            foreign_keys=[user_id])
 
     #: Polymorphic inheritance type discriminator
     type_ = db.Column(db.String(30, convert_unicode=True))
@@ -26,18 +28,37 @@ class Identity(db.Model, AutoName, AutoID):
             args['polymorphic_on'] = cls.type_
         return args
 
+    def get_id(self):
+        return unicode(self.id)
 
-@unistr
+
+class GoogleIdentity(Identity):
+
+    id = db.Column(db.Integer, db.ForeignKey('identity.id'), primary_key=True)
+
+    token = db.Column(db.String(255), nullable=False)
+
+    google_id = db.Column(db.String(255), nullable=False, index=True,
+            unique=True)
+
+    email = db.Column(db.String(255), nullable=True)
+
+    name = db.Column(db.String(255), nullable=True)
+
+
+class FacebookIdentity(Identity):
+
+    id = db.Column(db.Integer, db.ForeignKey('identity.id'), primary_key=True)
+
+
 class User(db.Model, AutoName, AutoID):
-
-    #: A :py:class:`list` of the identites for this :py:class:`User`
-    identities = db.relationship('Identity', back_populates='user')
 
     primary_identity_id = db.Column(db.Integer, db.ForeignKey('identity.id'),
                                     nullable=True)
 
     #: The primary :py:class:`Identity` the user has chosen.
-    primary_identity = db.relationship('Identity')
+    primary_identity = db.relationship('Identity',
+            foreign_keys=[primary_identity_id], uselist=False)
 
     @property
     def name(self):
@@ -45,5 +66,5 @@ class User(db.Model, AutoName, AutoID):
             return self.primary_identity.name
         return str(self)
 
-    def __unicode__(self):
+    def __repr__(self):
         return 'User({})'.format(self.id)

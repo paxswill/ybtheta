@@ -1,4 +1,4 @@
-from .views import blueprint
+from .views import blueprint, oauth, login_manager
 from .models import User
 
 # This is just to register the models with the database

@@ -4,7 +4,7 @@ from flask import Flask, escape
 import markdown
 import six
 
-from . import article, page_rename
+from . import article, page_rename, auth
 from .database import db
 from .admin_view import admin
 
@@ -22,7 +22,10 @@ def create_app(config=None, **kwargs):
     # initialize the various plugins and extensions
     db.init_app(app)
     admin.init_app(app)
+    auth.oauth.init_app(app)
+    auth.login_manager.init_app(app)
     # Add the blueprints
+    app.register_blueprint(auth.blueprint)
     app.register_blueprint(article.blueprint, url_prefix='/articles')
     app.register_blueprint(page_rename.blueprint)
     # Configure Jinja a little bit

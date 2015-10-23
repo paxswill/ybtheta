@@ -1,0 +1,10 @@
+{% import 'macros.html' as macros %}
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Login</h1>
+<form method="post">
+  {{ macros.render_input(form.csrf_token) }}
+  <button type="submit" name="google" value="google" class="btn btn-default">Log in With Google</button"
+</form>
+{% endblock content %}
