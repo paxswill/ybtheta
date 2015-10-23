@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, abort
 from sqlalchemy.orm.exc import NoResultFound
 
 from .models import RenamedPage
@@ -30,5 +30,6 @@ def lookup(path):
     except NoResultFound:
         if path == 'index':
             return render_template('index.html')
+        return abort(404)
     else:
         return registered_views[model.type_](model)
