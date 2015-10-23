@@ -6,6 +6,6 @@
 <h1>Articles</h1>
 <ul>
   {% for article in articles %}
-  <li><a href="{{ url_for('.article', article_id=article.id) }}">{{ article.title }}</a></li>
+  <li><a href="{{ url_for('.show_article', article_id=article.id) }}">{{ article.title }}</a></li>
   {% endfor %}
 {% endblock content %}

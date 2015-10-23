@@ -16,7 +16,7 @@ def list_articles():
 
 
 @blueprint.route('/<int:article_id>/')
-def article(article_id):
+def show_article(article_id):
     article = Article.query.get_or_404(article_id)
     return render_article(article)
 
